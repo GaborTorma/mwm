@@ -1,0 +1,64 @@
+{
+  "name": "citty-cli-starter",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@9.3.0+sha512.ee7b93e0c2bd11409c6424f92b866f31d3ea1bef5fbe47d3c7500cdc3c9668833d2e55681ad66df5b640c61fa9dc25d546efa54d76d7f8bf54b13614ac293631",
+  "description": "citty-cli-starter",
+  "author": "GABORTORMA",
+  "license": "MIT",
+  "keywords": [
+    "multi-repo",
+    "poly-repo",
+    "mono-repo",
+    "workspace",
+    "manager",
+    "citty",
+    "consola"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.mjs",
+      "require": "./dist/cli.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "citty-cli-starter": "./bin/cli.mjs"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "vitest dev",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepack": "pnpm run build",
+    "release": "release-it",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm lint && pnpm typecheck && vitest run --coverage",
+    "cli": "jiti ./scripts/cli.mjs"
+  },
+  "dependencies": {
+    "citty": "^0.1.6",
+    "consola": "^3.2.3"
+  },
+  "devDependencies": {
+    "@gabortorma/antfu-eslint-config": "^0.5.13",
+    "@types/node": "^20.14.2",
+    "jiti": "^1.21.6",
+    "release-it": "^17.3.0",
+    "typescript": "^5.4.5",
+    "unbuild": "^2.0.0",
+    "vitest": "^1.6.0"
+  }
+}

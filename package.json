@@ -31,7 +31,7 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "bin": {
-    "citty-cli-starter": "./bin/cli.mjs"
+    "citty-cli-starter": "./bin/cli.js"
   },
   "files": [
     "bin",
@@ -45,8 +45,8 @@
     "prepack": "pnpm run build",
     "release": "release-it",
     "typecheck": "tsc --noEmit",
-    "test": "pnpm lint && pnpm typecheck && vitest run --coverage",
-    "cli": "jiti ./scripts/cli.mjs"
+    "test": "pnpm lint && pnpm typecheck && vitest run",
+    "cli": "jiti ./scripts/cli.js"
   },
   "dependencies": {
     "citty": "^0.1.6",

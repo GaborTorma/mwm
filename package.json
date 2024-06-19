@@ -6,6 +6,9 @@
   "description": "_description_",
   "author": "GaborTorma",
   "license": "MIT",
+  "repository": {
+    "url": "git+ssh://git@github.com/GaborTorma/citty-cli-starter.git"
+  },
   "keywords": [
     "multi-repo",
     "poly-repo",

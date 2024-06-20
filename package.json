@@ -6,6 +6,9 @@
   "description": "Multi-repo Workspace Manager",
   "author": "GaborTorma",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "url": "git+ssh://git@github.com/GaborTorma/mwm.git"
   },

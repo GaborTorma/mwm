@@ -9,15 +9,7 @@
   "repository": {
     "url": "git+ssh://git@github.com/GaborTorma/citty-cli-starter.git"
   },
-  "keywords": [
-    "multi-repo",
-    "poly-repo",
-    "mono-repo",
-    "workspace",
-    "manager",
-    "citty",
-    "consola"
-  ],
+  "keywords": ["citty", "consola"],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

@@ -1,10 +1,11 @@
 import { runMain as _runMain, defineCommand } from 'citty'
+import pkg from '../package.json'
 import { greetings } from './greetings'
 
 const main = defineCommand({
   meta: {
     name: 'citty-cli-starter',
-    version: '1.0.0',
+    version: pkg.version,
     description: '_description_',
   },
   args: {

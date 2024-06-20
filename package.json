@@ -1,0 +1,63 @@
+{
+  "name": "citty-cli-starter",
+  "type": "module",
+  "version": "0.0.4",
+  "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a",
+  "description": "_description_",
+  "author": "GaborTorma",
+  "license": "MIT",
+  "repository": {
+    "url": "git+ssh://git@github.com/GaborTorma/citty-cli-starter.git"
+  },
+  "keywords": [
+    "citty",
+    "consola"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.mjs",
+      "require": "./dist/cli.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "citty-cli-starter": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "vitest dev",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepack": "pnpm run build",
+    "release": "dotenv release-it",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm lint && pnpm typecheck && vitest run",
+    "cli": "jiti ./scripts/cli.js"
+  },
+  "dependencies": {
+    "citty": "^0.1.6",
+    "consola": "^3.2.3"
+  },
+  "devDependencies": {
+    "@gabortorma/antfu-eslint-config": "^0.5.13",
+    "@types/node": "^20.14.5",
+    "dotenv-cli": "^7.4.2",
+    "jiti": "^1.21.6",
+    "release-it": "^17.3.0",
+    "typescript": "^5.4.5",
+    "unbuild": "^2.0.0",
+    "vitest": "^1.6.0"
+  }
+}

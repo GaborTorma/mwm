@@ -10,16 +10,16 @@ _description_
 > **Note**:
 > Replace `citty-cli-starter` to you package name, `_description_` and `gabortorma` globally to use this template.
 
-## Usage
-
-```bash
-npx @gabortorma/citty-cli-starter
-```
-
-Install globally
+## Install globally
 
 ```bash
 npm install -g @gabortorma/citty-cli-starter
+```
+
+## Usage
+
+```bash
+citty-cli-starter --version
 ```
 
 ## License

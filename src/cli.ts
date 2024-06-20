@@ -3,9 +3,9 @@ import { greetings } from './greetings'
 
 const main = defineCommand({
   meta: {
-    name: 'nrwm',
+    name: 'citty-cli-starter',
     version: '1.0.0',
-    description: 'My Awesome CLI App starter',
+    description: '_description_',
   },
   args: {
     name: {

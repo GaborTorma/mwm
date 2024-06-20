@@ -10,7 +10,6 @@
     "release": true
   },
   "npm": {
-    "publish": true,
-    "access": "public"
+    "publish": true
   }
 }

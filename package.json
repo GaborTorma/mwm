@@ -41,7 +41,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepack": "pnpm run build",
-    "release": "release-it",
+    "release": "dotenv release-it",
     "typecheck": "tsc --noEmit",
     "test": "pnpm lint && pnpm typecheck && vitest run",
     "cli": "jiti ./scripts/cli.js"
@@ -53,6 +53,7 @@
   "devDependencies": {
     "@gabortorma/antfu-eslint-config": "^0.5.13",
     "@types/node": "^20.14.5",
+    "dotenv-cli": "^7.4.2",
     "jiti": "^1.21.6",
     "release-it": "^17.3.0",
     "typescript": "^5.4.5",

@@ -1,4 +1,4 @@
-### mwm
+### @gabortorma/mwm
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -6,6 +6,18 @@
 [![code style][code-style-src]][code-style-href]
 
 Multi-repo Workspace Manager
+
+## Install globally
+
+```bash
+npm install -g @gabortorma/mwm
+```
+
+## Usage
+
+```bash
+mwm --version
+```
 
 ## License
 
@@ -20,4 +32,4 @@ Multi-repo Workspace Manager
 [license-src]: https://img.shields.io/github/license/gabortorma/mwm.svg?style=flat&colorA=080f12&colorB=1fa669
 [license-href]: https://github.com/gabortorma/mwm/blob/main/LICENSE
 [code-style-src]: https://antfu.me/badge-code-style.svg
-[code-style-href]: https://github.com/antfu/eslint-config
+[code-style-href]: https://github.com/gabortorma/antfu-eslint-config

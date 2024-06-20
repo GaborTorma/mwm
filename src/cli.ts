@@ -1,11 +1,12 @@
 import { runMain as _runMain, defineCommand } from 'citty'
+import pkg from '../package.json'
 import { greetings } from './greetings'
 
 const main = defineCommand({
   meta: {
-    name: 'nrwm',
-    version: '1.0.0',
-    description: 'My Awesome CLI App starter',
+    name: 'mwm',
+    version: pkg.version,
+    description: 'Multi-repo Workspace Manager',
   },
   args: {
     name: {

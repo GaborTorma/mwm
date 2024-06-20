@@ -5,7 +5,7 @@
 [![License][license-src]][license-href]
 [![code style][code-style-src]][code-style-href]
 
-Multi-repo Workspace Manager
+**M**ulti-repo **W**orkspace **M**anager
 
 ## Install globally
 

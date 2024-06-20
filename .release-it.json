@@ -1,8 +1,8 @@
 {
   "git": {
-    "commitMessage": "Release: ${version}",
-    "tagAnnotation": "Release: ${version}",
-    "tagName": "v${version}",
+    "commitMessage": "Release: mwm ${version}",
+    "tagAnnotation": "Release: mwm ${version}",
+    "tagName": "mwm-v${version}",
     "requireCommits": true,
     "requireCommitsFail": false
   },

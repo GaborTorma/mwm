@@ -9,6 +9,8 @@ _description_
 
 > **Note**:
 > Replace `citty-cli-starter` to you package name, `_description_` and `gabortorma` globally to use this template.
+>
+> If you want to publish the package, you need to set `npm.publish` to `true` in `.release-it.json` file.
 
 ## Install globally
 

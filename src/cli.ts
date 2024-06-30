@@ -24,4 +24,4 @@ const main = defineCommand({
   },
 })
 
-export const runMain = () => _runMain(main)
+export const runMain = async () => _runMain(main)

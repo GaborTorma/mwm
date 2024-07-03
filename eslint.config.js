@@ -4,4 +4,8 @@ export default antfu({
   typescript: {
     tsconfigPath: './tsconfig.test.json',
   },
+}, {
+  rules: {
+    'ts/strict-boolean-expressions': 'off',
+  },
 })

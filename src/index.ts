@@ -1,1 +1,2 @@
-export * from './greetings'
+export * from './releases'
+export * from './workspaces'

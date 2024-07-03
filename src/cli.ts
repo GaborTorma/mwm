@@ -1,27 +1,30 @@
 import { runMain as _runMain, defineCommand } from 'citty'
-import pkg from '../package.json'
-import { greetings } from './greetings'
+import { description, name, version } from '../package.json'
+import { selectWorkspaces } from './workspaces'
+import { releaseWorkspaces } from './releases'
 
 const main = defineCommand({
   meta: {
-    name: 'mwm',
-    version: pkg.version,
-    description: 'Multi-repo Workspace Manager',
+    name: name.split('/').pop(),
+    version,
+    description,
   },
+
   args: {
-    name: {
-      type: 'positional',
-      description: 'Your name',
-      required: true,
+    'filter': {
+      type: 'string',
+      description: 'Select workspace',
     },
-    friendly: {
+    'release-dependencies': {
       type: 'boolean',
-      description: 'Use friendly greeting',
+      description: 'Release all dependencies of selected workspaces',
     },
   },
-  run({ args }) {
-    console.log(greetings(args.name, args.friendly))
+
+  async run({ args: { filter, 'release-dependencies': releaseDependencies } }) {
+    const selectedWorkspaces = await selectWorkspaces(filter)
+    await releaseWorkspaces(selectedWorkspaces, releaseDependencies)
   },
 })
 
-export const runMain = () => _runMain(main)
+export const runMain = async () => _runMain(main)

@@ -54,7 +54,7 @@ function commitChanges(pkg: string, newVersion: string, cwd: string) {
   execSync(`git commit -m "packages(upgrade): ${pkg} v${newVersion}"`, { cwd })
 }
 
-async function fixDependencies(pkg: string) {
+async function fixDependencies(pkg: string, releaseDependencies: boolean, workspace: string = pkg) {
   const newVersion = getNewVersion(pkg)
   if (!newVersion) {
     consola.log(`No new version from ${pkg}`)
@@ -66,7 +66,12 @@ async function fixDependencies(pkg: string) {
     const fixedPackages = await getPackages(fixedPackageJsons)
     for (const fixedPackage of fixedPackages) {
       installDependencies(fixedPackage)
+      // if (fixedPackage.name === workspace) {
       commitChanges(pkg, newVersion, fixedPackage.cwd)
+      /* }
+      else {
+        await releaseWorkspace(fixedPackage.name, releaseDependencies)
+      } */
     }
     return true
   }
@@ -124,48 +129,47 @@ async function checkWorkspaceToContinue(workspace: string) {
   return isWorkspaceClean(workspace) || await promptToContinue(workspace)
 }
 
-function releasePackage(pkg: string) {
+function releasePackage(pkg: string): boolean {
   try {
     execSync(`pnpm --filter ${pkg} release`, { stdio: 'inherit' })
+    return true
   }
   catch (error) {
     consola.error(`Error in ${pkg} release`, (error as Error).message)
+    return false
   }
 }
 
-export async function release(workspace: string, releaseDependencies: boolean) {
+export async function releaseWorkspace(workspace: string, releaseDependencies: boolean) {
   if (!await checkWorkspaceToContinue(workspace)) {
     consola.warn(`${workspace} skipped`)
-    return
+    return false
   }
 
   const dependencies = getDependencies(workspace)
   if (releaseDependencies) {
-    consola.log(` ${dependencies.length} workspace dependencies found:\n  - ${dependencies.map(d => d.name).join('\n  - ')}`)
-    for (const dependency of dependencies) {
-      if (!await checkWorkspaceToContinue(dependency.name)) {
-        consola.warn(`${dependency.name} skipped`)
-        dependency.skipped = true
-        return false
+    if (dependencies.length) {
+      consola.log(` ${dependencies.length} workspace dependencies found:\n  - ${dependencies.map(d => d.name).join('\n  - ')}`)
+      for (const dependency of dependencies) {
+        dependency.released = await releaseWorkspace(dependency.name, releaseDependencies)
+        dependency.fixed = await fixDependencies(dependency.name, releaseDependencies, workspace)
       }
-      // dependency.released = releaseWorkspace(dependency.name)
-      dependency.fixed = await fixDependencies(dependency.name)
-    }
-    if (dependencies.every(({ released, fixed }) => released && fixed)) {
-      releasePackage(workspace)
-    }
-    else {
-      consola.error('Some workspace dependencies failed to release or fix. Aborting...')
     }
   }
-  else {
+  if (!!releaseDependencies || dependencies.every(({ released, fixed }) => released && fixed)) {
     releasePackage(workspace)
+    await fixDependencies(workspace, releaseDependencies)
+    return true
+  }
+  else {
+    consola.error('Some workspace release or fix failed. Aborting...')
+    return false
   }
 }
 
 export async function releaseWorkspaces(workspaces: string[], releaseDependencies: boolean) {
   for (const workspace of workspaces) {
     consola.info('Release workspace:', workspace)
-    await release(workspace, releaseDependencies)
+    await releaseWorkspace(workspace, releaseDependencies)
   }
 }

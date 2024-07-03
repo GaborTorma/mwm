@@ -11,17 +11,18 @@ const main = defineCommand({
   },
 
   args: {
-    'filter': {
+    filter: {
       type: 'string',
       description: 'Select workspace',
     },
-    'release-dependencies': {
+    releaseDependencies: {
+      alias: ['release-dependencies', 'rd'],
       type: 'boolean',
       description: 'Release all dependencies of selected workspaces',
     },
   },
 
-  async run({ args: { filter, 'release-dependencies': releaseDependencies } }) {
+  async run({ args: { filter, releaseDependencies } }) {
     const selectedWorkspaces = await selectWorkspaces(filter)
     await releaseWorkspaces(selectedWorkspaces, releaseDependencies)
   },

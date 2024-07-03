@@ -3,15 +3,26 @@ import type { SpawnSyncReturns } from 'node:child_process'
 import { execSync } from 'node:child_process'
 import path from 'node:path'
 import { readPackageJson } from '@pnpm/read-package-json'
-import { createDependencyMap, getPackageInfos } from 'workspace-tools'
+import { createDependencyMap, getPackageInfos, git } from 'workspace-tools'
 import consola from 'consola'
-import { stdoutToArray } from './utils'
+import { processGitOutput, stdoutToArray } from './utils'
 
 const files = ['package.json', 'pnpm-lock.yaml']
 
-function getNewVersion(pkg: string): string | undefined {
+function getSourceArgs(pkg: string, workspace: string): string {
+  const packageInfos = getPackageInfos('.')
+  const sources = [
+    packageInfos[pkg].packageJsonPath,
+    packageInfos[workspace].packageJsonPath,
+  ]
+  const sourceArgs = sources.map(source => `--source ${source}`).join(' ')
+  return sourceArgs
+}
+
+function getNewVersion(pkg: string, workspace: string): string | undefined {
   try {
-    execSync(`syncpack list-mismatches --filter '${pkg}'`)
+    const sourceArgs = getSourceArgs(pkg, workspace)
+    execSync(`syncpack list-mismatches --filter '${pkg}' ${sourceArgs}`)
   }
   catch (error) {
     const stdout = (error as SpawnSyncReturns<Buffer>)?.stdout
@@ -19,8 +30,9 @@ function getNewVersion(pkg: string): string | undefined {
   }
 }
 
-function fixPackageJsons(pkg: string): string[] {
-  const stdout = execSync(`syncpack fix-mismatches --filter '${pkg}'`)
+function fixPackageJsons(pkg: string, workspace: string): string[] {
+  const sourceArgs = getSourceArgs(pkg, workspace)
+  const stdout = execSync(`syncpack fix-mismatches --filter '${pkg}' ${sourceArgs}`)
   return stdoutToArray(stdout).filter(v => v.startsWith('✓')).map(v => v.replace(/✓ /, ''))
 }
 
@@ -30,7 +42,7 @@ interface Package {
   name: string
 }
 
-async function getPackages(fixedPackageJsons: string[]): Promise<Package[]> {
+async function getFixedPackages(fixedPackageJsons: string[]): Promise<Package[]> {
   const packages: Package[] = []
   for (const fixedPackageJson of fixedPackageJsons) {
     const { name } = await readPackageJson(fixedPackageJson)
@@ -50,20 +62,20 @@ function installDependencies(fixedPackage: Package) {
 }
 
 function commitChanges(pkg: string, newVersion: string, cwd: string) {
-  execSync(`git add ${files.join(' ')}`, { cwd })
-  execSync(`git commit -m "packages(upgrade): ${pkg} v${newVersion}"`, { cwd })
+  git(['add', ...files], { cwd })
+  git(['commit', '-m', `packages(upgrade): ${pkg} v${newVersion}`], { cwd })
 }
 
 async function fixDependencies(pkg: string, releaseDependencies: boolean, workspace: string = pkg) {
-  const newVersion = getNewVersion(pkg)
+  const newVersion = getNewVersion(pkg, workspace)
   if (!newVersion) {
     consola.log(`No new version from ${pkg}`)
     return true
   }
   consola.log(`New version from ${pkg}:`, newVersion)
   try {
-    const fixedPackageJsons = fixPackageJsons(pkg)
-    const fixedPackages = await getPackages(fixedPackageJsons)
+    const fixedPackageJsons = fixPackageJsons(pkg, workspace)
+    const fixedPackages = await getFixedPackages(fixedPackageJsons)
     for (const fixedPackage of fixedPackages) {
       installDependencies(fixedPackage)
       // if (fixedPackage.name === workspace) {
@@ -97,16 +109,9 @@ function getDependencies(workspace: string): Dependency[] {
 }
 
 function isFilesCleanByCwd(cwd: string): boolean {
-  const stdout = execSync('git status --porcelain', { cwd })
-  const stdArr = stdoutToArray(stdout)
-  for (const file of files) {
-    for (const line of stdArr) {
-      if (new RegExp(`\\s${file}$`).test(line)) {
-        return false
-      }
-    }
-  }
-  return true
+  const output = processGitOutput(git(['status', '--porcelain'], { cwd }))
+  const isClean = output.length === 0
+  return isClean
 }
 
 function getPackageCwd(pkg: string): string {
@@ -158,7 +163,6 @@ export async function releaseWorkspace(workspace: string, releaseDependencies: b
   }
   if (!!releaseDependencies || dependencies.every(({ released, fixed }) => released && fixed)) {
     releasePackage(workspace)
-    await fixDependencies(workspace, releaseDependencies)
     return true
   }
   else {

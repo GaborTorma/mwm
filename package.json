@@ -47,7 +47,8 @@
     "release": "dotenv release-it",
     "typecheck": "tsc --noEmit",
     "test": "pnpm lint && pnpm typecheck && vitest run",
-    "cli": "jiti ./scripts/cli.js"
+    "cli": "jiti ./scripts/cli.js",
+    "merge-template": "./scripts/merge-template.sh"
   },
   "dependencies": {
     "citty": "^0.1.6",

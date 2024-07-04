@@ -14,6 +14,9 @@ importers:
       citty:
         specifier: ^0.1.6
         version: 0.1.6
+      compare-versions:
+        specifier: ^6.1.0
+        version: 6.1.0
       consola:
         specifier: ^3.2.3
         version: 3.2.3
@@ -1332,6 +1335,9 @@ packages:
 
   commondir@1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
+
+  compare-versions@6.1.0:
+    resolution: {integrity: sha512-LNZQXhqUvqUTotpZ00qLSaify3b4VFD588aRr8MKFw4CMUr98ytzCW5wDH5qx/DEY5kCDXcbcRuCqL0szEf2tg==}
 
   compatx@0.1.8:
     resolution: {integrity: sha512-jcbsEAR81Bt5s1qOFymBufmCbXCXbk0Ql+K5ouj6gCyx2yHlu6AgmGIi9HxfKixpUDO5bCFJUHQ5uM6ecbTebw==}
@@ -5205,6 +5211,8 @@ snapshots:
   comment-parser@1.4.1: {}
 
   commondir@1.0.1: {}
+
+  compare-versions@6.1.0: {}
 
   compatx@0.1.8: {}
 

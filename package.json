@@ -60,6 +60,7 @@
   "dependencies": {
     "@pnpm/read-package-json": "^9.0.3",
     "citty": "^0.1.6",
+    "compare-versions": "^6.1.0",
     "consola": "^3.2.3",
     "pnpm": "^9.4.0",
     "syncpack": "^12.3.3",

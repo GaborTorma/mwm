@@ -2,7 +2,9 @@ import type Buffer from 'node:buffer'
 import type { SpawnSyncReturns } from 'node:child_process'
 import { execSync } from 'node:child_process'
 import path from 'node:path'
+import { compareVersions } from 'compare-versions'
 import { readPackageJson } from '@pnpm/read-package-json'
+import type { PackageInfo } from 'workspace-tools'
 import { createDependencyMap, getPackageInfos, git } from 'workspace-tools'
 import consola from 'consola'
 import { processGitOutput, stdoutToArray } from './utils'
@@ -19,14 +21,23 @@ function getSourceArgs(pkg: string, workspace: string): string {
   return sourceArgs
 }
 
+function hasOldVersion(dependencies: PackageInfo['dependencies'], pkg: string, version: string): boolean {
+  if (!dependencies?.[pkg])
+    return false
+
+  return compareVersions(dependencies[pkg], version) < 0
+}
+
+function hasOldVersionInPackageInfo({ dependencies, devDependencies, peerDependencies }: PackageInfo, pkg: string, version: string): boolean {
+  return [dependencies, devDependencies, peerDependencies]
+    .some(deps => hasOldVersion(deps, pkg, version))
+}
+
 function getNewVersion(pkg: string, workspace: string): string | undefined {
-  try {
-    const sourceArgs = getSourceArgs(pkg, workspace)
-    execSync(`syncpack list-mismatches --filter '${pkg}' ${sourceArgs}`)
-  }
-  catch (error) {
-    const stdout = (error as SpawnSyncReturns<Buffer>)?.stdout
-    return stdoutToArray(stdout)?.filter(v => v.startsWith(`✘ ${pkg}`))?.[0]?.split(' ')?.[4]
+  const packageInfos = getPackageInfos('.')
+  const { version: pkgVersion } = packageInfos[pkg]
+  if (hasOldVersionInPackageInfo(packageInfos[workspace], pkg, pkgVersion)) {
+    return pkgVersion
   }
 }
 

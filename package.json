@@ -58,17 +58,17 @@
     "merge-template": "./scripts/merge-template.sh"
   },
   "dependencies": {
-    "@pnpm/read-package-json": "^9.0.3",
+    "@npmcli/package-json": "^5.2.0",
     "citty": "^0.1.6",
     "compare-versions": "^6.1.0",
     "consola": "^3.2.3",
     "pnpm": "^9.4.0",
-    "syncpack": "^12.3.3",
     "workspace-tools": "^0.36.4"
   },
   "devDependencies": {
     "@gabortorma/antfu-eslint-config": "^0.5.16",
     "@types/node": "^20.14.9",
+    "@types/npmcli__package-json": "^4.0.4",
     "dotenv-cli": "^7.4.2",
     "jiti": "^1.21.6",
     "release-it": "^17.4.1",

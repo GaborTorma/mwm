@@ -1,25 +1,13 @@
-import type Buffer from 'node:buffer'
-import type { SpawnSyncReturns } from 'node:child_process'
 import { execSync } from 'node:child_process'
 import path from 'node:path'
 import { compareVersions } from 'compare-versions'
-import { readPackageJson } from '@pnpm/read-package-json'
 import type { PackageInfo } from 'workspace-tools'
 import { createDependencyMap, getPackageInfos, git } from 'workspace-tools'
 import consola from 'consola'
-import { processGitOutput, stdoutToArray } from './utils'
+import PkgJson from '@npmcli/package-json'
+import { processGitOutput } from './utils'
 
 const files = ['package.json', 'pnpm-lock.yaml']
-
-function getSourceArgs(pkg: string, workspace: string): string {
-  const packageInfos = getPackageInfos('.')
-  const sources = [
-    packageInfos[pkg].packageJsonPath,
-    packageInfos[workspace].packageJsonPath,
-  ]
-  const sourceArgs = sources.map(source => `--source ${source}`).join(' ')
-  return sourceArgs
-}
 
 function hasOldVersion(dependencies: PackageInfo['dependencies'], pkg: string, version: string): boolean {
   if (!dependencies?.[pkg])
@@ -41,35 +29,27 @@ function getNewVersion(pkg: string, workspace: string): string | undefined {
   }
 }
 
-function fixPackageJsons(pkg: string, workspace: string): string[] {
-  const sourceArgs = getSourceArgs(pkg, workspace)
-  const stdout = execSync(`syncpack fix-mismatches --filter '${pkg}' ${sourceArgs}`)
-  return stdoutToArray(stdout).filter(v => v.startsWith('✓')).map(v => v.replace(/✓ /, ''))
+function getWorkspaceCwd(workspace: string): string {
+  const packageInfos = getPackageInfos('.')
+  return path.dirname(packageInfos[workspace].packageJsonPath)
 }
 
-interface Package {
-  cwd: string
-  packageJson: string
-  name: string
+async function updateWorkspaceDeps(pkg: string, pkgVersion: string, cwd: string) {
+  const pkgJson = await PkgJson.load(cwd)
+  if (pkgJson.content.dependencies?.[pkg])
+    pkgJson.content.dependencies[pkg] = pkgVersion
+  if (pkgJson.content.devDependencies?.[pkg])
+    pkgJson.content.devDependencies[pkg] = pkgVersion
+  if (pkgJson.content.peerDependencies?.[pkg])
+    pkgJson.content.peerDependencies[pkg] = pkgVersion
+  pkgJson.update(pkgJson.content)
+  await pkgJson.save()
 }
 
-async function getFixedPackages(fixedPackageJsons: string[]): Promise<Package[]> {
-  const packages: Package[] = []
-  for (const fixedPackageJson of fixedPackageJsons) {
-    const { name } = await readPackageJson(fixedPackageJson)
-    packages.push({
-      cwd: path.dirname(fixedPackageJson),
-      packageJson: fixedPackageJson,
-      name,
-    })
-  }
-  return packages
-}
-
-function installDependencies(fixedPackage: Package) {
-  consola.log(`Installing dependencies for ${fixedPackage.name}...`)
-  execSync(`pnpm install --filter ${fixedPackage.name}`)
-  consola.info(`Dependencies installed for ${fixedPackage.name}`)
+function installDependencies(workspace: string) {
+  consola.log(`Installing dependencies for ${workspace}...`)
+  execSync(`pnpm install --filter ${workspace}`)
+  consola.info(`Dependencies installed for ${workspace}`)
 }
 
 function commitChanges(pkg: string, newVersion: string, cwd: string) {
@@ -77,7 +57,7 @@ function commitChanges(pkg: string, newVersion: string, cwd: string) {
   git(['commit', '-m', `packages(upgrade): ${pkg} v${newVersion}`], { cwd })
 }
 
-async function fixDependencies(pkg: string, releaseDependencies: boolean, workspace: string = pkg) {
+async function fixDependencies(pkg: string, releaseDependencies: boolean, workspace: string = pkg): Promise<boolean> {
   const newVersion = getNewVersion(pkg, workspace)
   if (!newVersion) {
     consola.log(`No new version from ${pkg}`)
@@ -85,17 +65,10 @@ async function fixDependencies(pkg: string, releaseDependencies: boolean, worksp
   }
   consola.log(`New version from ${pkg}:`, newVersion)
   try {
-    const fixedPackageJsons = fixPackageJsons(pkg, workspace)
-    const fixedPackages = await getFixedPackages(fixedPackageJsons)
-    for (const fixedPackage of fixedPackages) {
-      installDependencies(fixedPackage)
-      // if (fixedPackage.name === workspace) {
-      commitChanges(pkg, newVersion, fixedPackage.cwd)
-      /* }
-      else {
-        await releaseWorkspace(fixedPackage.name, releaseDependencies)
-      } */
-    }
+    const cwd = getWorkspaceCwd(workspace)
+    await updateWorkspaceDeps(pkg, newVersion, cwd)
+    installDependencies(workspace)
+    commitChanges(pkg, newVersion, cwd)
     return true
   }
   catch (error) {

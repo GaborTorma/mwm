@@ -2,7 +2,7 @@
   "name": "@gabortorma/mwm",
   "type": "module",
   "version": "0.0.5",
-  "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a",
+  "packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903",
   "description": "Multi-repo Workspace Manager",
   "author": "gabortorma",
   "license": "MIT",
@@ -15,7 +15,7 @@
   "keywords": [
     "citty",
     "consola",
-    "syncpack",
+    "syncpack-alternative",
     "workspace-tools",
     "release-it",
     "pnpm",
@@ -58,22 +58,21 @@
     "merge-template": "./scripts/merge-template.sh"
   },
   "dependencies": {
-    "@npmcli/package-json": "^5.2.0",
+    "@pnpm/exec": "^2.0.0",
     "citty": "^0.1.6",
     "compare-versions": "^6.1.0",
     "consola": "^3.2.3",
-    "pnpm": "^9.4.0",
+    "pnpm": "^9.5.0",
     "workspace-tools": "^0.36.4"
   },
   "devDependencies": {
     "@gabortorma/antfu-eslint-config": "^0.5.16",
-    "@types/node": "^20.14.9",
-    "@types/npmcli__package-json": "^4.0.4",
+    "@types/node": "^20.14.10",
     "dotenv-cli": "^7.4.2",
     "jiti": "^1.21.6",
-    "release-it": "^17.4.1",
+    "release-it": "^17.5.0",
     "typescript": "^5.5.3",
     "unbuild": "^2.0.0",
-    "vitest": "^1.6.0"
+    "vitest": "^2.0.1"
   }
 }

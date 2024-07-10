@@ -1,10 +1,9 @@
-import { execSync } from 'node:child_process'
 import path from 'node:path'
+import pnpm from '@pnpm/exec'
 import { compareVersions } from 'compare-versions'
 import type { PackageInfo } from 'workspace-tools'
 import { createDependencyMap, getPackageInfos, git } from 'workspace-tools'
 import consola from 'consola'
-import PkgJson from '@npmcli/package-json'
 import { processGitOutput } from './utils'
 
 const files = ['package.json', 'pnpm-lock.yaml']
@@ -16,7 +15,8 @@ function hasOldVersion(dependencies: PackageInfo['dependencies'], pkg: string, v
   return compareVersions(dependencies[pkg], version) < 0
 }
 
-function hasOldVersionInPackageInfo({ dependencies, devDependencies, peerDependencies }: PackageInfo, pkg: string, version: string): boolean {
+function hasOldVersionInPackageInfo(packageInfo: PackageInfo, pkg: string, version: string): boolean {
+  const { dependencies, devDependencies, peerDependencies } = packageInfo
   return [dependencies, devDependencies, peerDependencies]
     .some(deps => hasOldVersion(deps, pkg, version))
 }
@@ -29,30 +29,17 @@ function getNewVersion(pkg: string, workspace: string): string | undefined {
   }
 }
 
-function getWorkspaceCwd(workspace: string): string {
-  const packageInfos = getPackageInfos('.')
-  return path.dirname(packageInfos[workspace].packageJsonPath)
+async function updateWorkspaceDeps(workspace: string, pkg: string, pkgVersion: string) {
+  try {
+    await pnpm(['--filter', workspace, 'update', `${pkg}@${pkgVersion}`])
+  }
+  catch (error) {
+    consola.error('Error in updateWorkspaceDeps', (error as Error).message)
+  }
 }
 
-async function updateWorkspaceDeps(pkg: string, pkgVersion: string, cwd: string) {
-  const pkgJson = await PkgJson.load(cwd)
-  if (pkgJson.content.dependencies?.[pkg])
-    pkgJson.content.dependencies[pkg] = pkgVersion
-  if (pkgJson.content.devDependencies?.[pkg])
-    pkgJson.content.devDependencies[pkg] = pkgVersion
-  if (pkgJson.content.peerDependencies?.[pkg])
-    pkgJson.content.peerDependencies[pkg] = pkgVersion
-  pkgJson.update(pkgJson.content)
-  await pkgJson.save()
-}
-
-function installDependencies(workspace: string) {
-  consola.log(`Installing dependencies for ${workspace}...`)
-  execSync(`pnpm install --filter ${workspace}`)
-  consola.info(`Dependencies installed for ${workspace}`)
-}
-
-function commitChanges(pkg: string, newVersion: string, cwd: string) {
+function commitChanges(workspace: string, pkg: string, newVersion: string) {
+  const cwd = getPackageCwd(workspace)
   git(['add', ...files], { cwd })
   git(['commit', '-m', `packages(upgrade): ${pkg} v${newVersion}`], { cwd })
 }
@@ -65,10 +52,8 @@ async function fixDependencies(pkg: string, releaseDependencies: boolean, worksp
   }
   consola.log(`New version from ${pkg}:`, newVersion)
   try {
-    const cwd = getWorkspaceCwd(workspace)
-    await updateWorkspaceDeps(pkg, newVersion, cwd)
-    installDependencies(workspace)
-    commitChanges(pkg, newVersion, cwd)
+    await updateWorkspaceDeps(workspace, pkg, newVersion)
+    commitChanges(workspace, pkg, newVersion)
     return true
   }
   catch (error) {
@@ -118,9 +103,9 @@ async function checkWorkspaceToContinue(workspace: string) {
   return isWorkspaceClean(workspace) || await promptToContinue(workspace)
 }
 
-function releasePackage(pkg: string): boolean {
+async function releasePackage(pkg: string): Promise<boolean> {
   try {
-    execSync(`pnpm --filter ${pkg} release`, { stdio: 'inherit' })
+    await pnpm(['--filter', pkg, 'release'])
     return true
   }
   catch (error) {
@@ -146,7 +131,7 @@ export async function releaseWorkspace(workspace: string, releaseDependencies: b
     }
   }
   if (!!releaseDependencies || dependencies.every(({ released, fixed }) => released && fixed)) {
-    releasePackage(workspace)
+    await releasePackage(workspace)
     return true
   }
   else {

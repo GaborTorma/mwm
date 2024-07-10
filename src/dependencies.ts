@@ -51,3 +51,8 @@ export function getDependents(pkg: string): string[] {
   const dependents = dependencyMap.dependents.get(pkg)
   return Array.from(dependents || [])
 }
+
+export function getDependentsWithoutWorkspaces(pkg: string, workspaces: string[]): string[] {
+  return getDependents(pkg)
+    .filter(dependent => !workspaces.includes(dependent))
+}

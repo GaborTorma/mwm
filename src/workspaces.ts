@@ -12,15 +12,18 @@ export function getValidWorkspaces(): string[] {
 
 export type Filter = string | string[] | undefined
 
-function getCheckedWorkspaces(workspaces: string[], validWorkspaces: string[]): string[] {
-  return workspaces.filter(workspace =>
-    validWorkspaces.includes(workspace)
-      ? true
-      : consola.warn(`${workspace} workspace not found. Skipping...`),
-  )
+function getCheckedWorkspaces(workspaces: string[], validWorkspaces: string[]): Set<string> {
+  const workspaceSet = new Set<string>()
+  for (const workspace of workspaces) {
+    if (validWorkspaces.includes(workspace))
+      workspaceSet.add(workspace)
+    else
+      consola.warn(`${workspace} workspace not found. Skipping...`)
+  }
+  return workspaceSet
 }
 
-export async function getSelectedWorkspaces(filter: Filter): Promise<string[]> {
+export async function getSelectedWorkspaces(filter: Filter): Promise<Set<string>> {
   const validWorkspaces = getValidWorkspaces()
 
   if (typeof filter === 'string')
@@ -29,16 +32,18 @@ export async function getSelectedWorkspaces(filter: Filter): Promise<string[]> {
   if (Array.isArray(filter))
     return getCheckedWorkspaces(filter, validWorkspaces)
 
-  return consola.prompt('Select workspaces', {
-    type: 'multiselect',
-    options: validWorkspaces,
-  })
+  return new Set<string>(
+    await consola.prompt('Select workspaces', {
+      type: 'multiselect',
+      options: validWorkspaces,
+    }),
+  )
 }
 
-export async function selectWorkspaces(filter: Filter): Promise<string[]> {
+export async function selectWorkspaces(filter: Filter): Promise<Set<string>> {
   const selectedWorkspaces = await getSelectedWorkspaces(filter)
 
-  if (selectedWorkspaces.length === 0) {
+  if (selectedWorkspaces.size === 0) {
     consola.error('No workspace selected')
   }
   else {
@@ -47,15 +52,3 @@ export async function selectWorkspaces(filter: Filter): Promise<string[]> {
 
   return selectedWorkspaces
 }
-
-/*
-export function filterIsEqualWithWorkspaces(filter: Filter, workspaces: string[]): boolean {
-  if (!Array.isArray(filter))
-    return false
-
-  if (filter.length !== workspaces.length)
-    return false
-
-  return workspaces.every(workspace => filter.includes(workspace))
-}
-*/

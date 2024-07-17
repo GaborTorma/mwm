@@ -1,7 +1,7 @@
 import pnpm from '@pnpm/exec'
 import consola from 'consola'
 import { isWorkspaceClean } from './git'
-import { fixDependencies, getDependencies, getDependents, getDependentsWithoutWorkspaces } from './dependencies'
+import { fixDependencies, getDependencies, getDependentsWithoutWorkspaces } from './dependencies'
 import { packageFiles } from './files'
 import { getNewVersion } from './versions'
 
@@ -29,56 +29,48 @@ async function checkWorkspaceToContinue(workspace: string) {
     || await promptToContinue(workspace)
 }
 
-async function releasePackage(pkg: string): Promise<boolean> {
-  try {
-    await pnpm(['--filter', pkg, 'release'])
-    return true
-  }
-  catch (error) {
-    consola.error(`Error in ${pkg} release`, (error as Error).message)
-    return false
-  }
+async function releasePackage(pkg: string) {
+  await pnpm(['--filter', pkg, 'release'])
 }
 
-export async function releaseWorkspace(workspace: string, releaseDependencies: boolean, workspaces: string[], release?: boolean) {
-  workspaces = workspaces.concat(workspace)
+export async function releaseWorkspace(workspace: string, releaseDependencies: boolean, workspaces: Set<string>, release?: boolean) {
   if (!await checkWorkspaceToContinue(workspace)) {
     consola.warn(`${workspace} skipped`)
-    return false
+    return
   }
 
-  const dependencies = getDependencies(workspace)
   if (releaseDependencies) {
+    const dependencies = getDependencies(workspace)
     if (dependencies.length) {
-      consola.log(` ${dependencies.length} workspace dependencies found:\n  - ${dependencies.map(d => d.name).join('\n  - ')}`)
+      consola.log(` ${dependencies.length} workspace dependencies found:\n  - ${dependencies.join('\n  - ')}`)
       for (const dependency of dependencies) {
-        dependency.released = await releaseWorkspace(dependency.name, releaseDependencies, workspaces, release)
-        dependency.fixed = await fixDependencies(workspace, dependency.name)
+        await releaseWorkspace(dependency, releaseDependencies, workspaces, release)
+        await fixDependencies(workspace, dependency)
       }
     }
   }
 
-  if (!!releaseDependencies || dependencies.every(({ released, fixed }) => released && fixed)) {
-    if (release === true || await promptToReleaseWorkspace(workspace)) {
-      await releasePackage(workspace)
-      const dependents = getDependentsWithoutWorkspaces(workspace, workspaces)
-      for (const dependent of dependents) {
-        if (await promptToReleaseDependent(dependent, workspace)) {
-          await releaseWorkspace(dependent, releaseDependencies, workspaces)
-        }
+  if (release === true || await promptToReleaseWorkspace(workspace)) {
+    await releasePackage(workspace)
+    workspaces.delete(workspace)
+    const dependents = getDependentsWithoutWorkspaces(workspace, workspaces)
+    for (const dependent of dependents) {
+      if (await promptToReleaseDependent(dependent, workspace)) {
+        workspaces.add(dependent)
+        // await releaseWorkspace(dependent, releaseDependencies, workspaces)
       }
     }
-    return true
-  }
-  else {
-    consola.error('Some workspace release or fix failed. Aborting...')
-    return false
   }
 }
 
-export async function releaseWorkspaces(workspaces: string[], releaseDependencies: boolean) {
+export async function releaseWorkspaces(workspaces: Set<string>, releaseDependencies: boolean) {
   for (const workspace of workspaces) {
     consola.info('Release workspace:', workspace)
-    await releaseWorkspace(workspace, releaseDependencies, workspaces, true)
+    try {
+      await releaseWorkspace(workspace, releaseDependencies, workspaces, true)
+    }
+    catch (error) {
+      consola.error(`Some dependencies failed to fix or release for ${workspace}`, error)
+    }
   }
 }

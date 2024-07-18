@@ -23,6 +23,9 @@ importers:
       pnpm:
         specifier: ^9.5.0
         version: 9.5.0
+      release-it:
+        specifier: ^17.6.0
+        version: 17.6.0(typescript@5.5.3)
       workspace-tools:
         specifier: ^0.36.4
         version: 0.36.4
@@ -39,9 +42,6 @@ importers:
       jiti:
         specifier: ^1.21.6
         version: 1.21.6
-      release-it:
-        specifier: ^17.6.0
-        version: 17.6.0(typescript@5.5.3)
       typescript:
         specifier: ^5.5.3
         version: 5.5.3

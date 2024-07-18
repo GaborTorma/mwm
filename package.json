@@ -60,19 +60,19 @@
   "dependencies": {
     "@pnpm/exec": "^2.0.0",
     "citty": "^0.1.6",
-    "compare-versions": "^6.1.0",
+    "compare-versions": "^6.1.1",
     "consola": "^3.2.3",
     "pnpm": "^9.5.0",
     "workspace-tools": "^0.36.4"
   },
   "devDependencies": {
     "@gabortorma/antfu-eslint-config": "^0.5.16",
-    "@types/node": "^20.14.10",
+    "@types/node": "^20.14.11",
     "dotenv-cli": "^7.4.2",
     "jiti": "^1.21.6",
-    "release-it": "^17.5.0",
+    "release-it": "^17.6.0",
     "typescript": "^5.5.3",
     "unbuild": "^2.0.0",
-    "vitest": "^2.0.1"
+    "vitest": "^2.0.3"
   }
 }

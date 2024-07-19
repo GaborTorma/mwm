@@ -48,8 +48,7 @@
   },
   "files": [
     "bin",
-    "dist",
-    "release-it-config"
+    "dist"
   ],
   "scripts": {
     "build": "unbuild",

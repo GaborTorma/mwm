@@ -2,7 +2,13 @@ import antfu from '@gabortorma/antfu-eslint-config'
 
 export default antfu({
   typescript: {
-    tsconfigPath: './tsconfig.test.json',
+    parserOptions: {
+      project: [
+        'tsconfig.json',
+        'tsconfig.test.json',
+        'tsconfig.release.json',
+      ],
+    },
   },
 }, {
   rules: {

@@ -7,5 +7,5 @@
     "strict": true,
     "esModuleInterop": true
   },
-  "include": ["test"]
+  "include": [".release-it.ts"]
 }

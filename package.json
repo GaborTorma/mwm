@@ -35,9 +35,9 @@
       "require": "./dist/cli.cjs"
     },
     "./release-it-config/package": {
-      "types": "./dist//release-it-config/package.d.ts",
-      "import": "./dist//release-it-config/package.mjs",
-      "require": "./dist//release-it-config/package.cjs"
+      "types": "./dist/release-it-config/package.d.ts",
+      "import": "./dist/release-it-config/package.mjs",
+      "require": "./dist/release-it-config/package.cjs"
     }
   },
   "main": "./dist/index.cjs",

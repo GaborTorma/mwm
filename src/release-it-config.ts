@@ -37,7 +37,25 @@ function defConfigForRelease(commitMessage: string, tagName: string, tagAnnotati
   } satisfies Config
 }
 
-  type Preset = 'package' | 'release'
+function defConfigForNuxtLayer(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
+  return {
+    git: {
+      commitMessage,
+      tagAnnotation,
+      tagName,
+      requireCommits: true,
+      requireCommitsFail: false,
+    },
+    github: {
+      release: true,
+    },
+    npm: {
+      publish: true,
+    },
+  } satisfies Config
+}
+
+type Preset = 'package' | 'release' | 'nuxt-layer'
 
 export function defineReleaseItConfig(preset: Preset, name?: string, config?: Config): Config {
   // eslint-disable-next-line no-template-curly-in-string
@@ -56,5 +74,7 @@ export function defineReleaseItConfig(preset: Preset, name?: string, config?: Co
       return defu(config, defConfigForPackage(commitMessage, tagName))
     case 'release':
       return defu(config, defConfigForRelease(commitMessage, tagName))
+    case 'nuxt-layer':
+      return defu(config, defConfigForNuxtLayer(commitMessage, tagName))
   }
 }

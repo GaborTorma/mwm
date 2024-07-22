@@ -42,7 +42,6 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "bin": {
     "mwm": "./bin/cli.js"
   },

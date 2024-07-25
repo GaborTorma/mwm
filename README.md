@@ -16,7 +16,56 @@ npm install -g @gabortorma/mwm
 ## Usage
 
 ```bash
-mwm --version
+mwm --help
+```
+
+### Release
+
+```bash
+mwm release --help
+```
+
+### Generate
+
+Generate new submodule from template
+
+```bash
+mwm generate --help
+```
+
+Required to declare minimum one owner with [GitHub token](https://github.com/settings/tokens) in the config file.
+
+Recommended to use `.mwmrc` file for token and add it to `.gitignore`.
+
+```
+owners.NAME_OF_OWNER.token = ghp_xxxxx
+```
+
+Required scopes for the token:
+
+- repo
+- write:packages
+- delete:packages
+- delete_repo
+
+## Config
+
+You can use `mwm.config` or `.mwmrc` files for configuration.
+
+MWM uses [unjs/c12](https://github.com/unjs/c12) for reading config files. Check the documentation for more information and all available options.
+
+See the [loadConfig](./src/config.ts) options.
+
+### TypeScript config
+
+You can use `defineMWMConfig` function in `mwm.config.ts` file to define the config with TypeScript support.
+
+```ts
+import { defineMWMConfig } from '@gabortorma/mwm'
+
+export default defineMWMConfig({
+  // your own config
+})
 ```
 
 ## License

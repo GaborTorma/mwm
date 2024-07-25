@@ -1,9 +1,9 @@
 import pnpm from '@pnpm/exec'
 import consola from 'consola'
 import { isWorkspaceClean } from './git'
+import { getNewVersion } from './versions'
 import { fixDependencies, getDependencies, getDependentsWithoutWorkspaces } from './dependencies'
 import { packageFiles } from './files'
-import { getNewVersion } from './versions'
 
 async function promptToContinue(workspace: string): Promise<boolean> {
   const message = `${workspace} workspace ${packageFiles.join(' or ')} file modified.\nWanna continue release?`

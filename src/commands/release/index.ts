@@ -1,6 +1,6 @@
-import { runMain as _runMain, defineCommand } from 'citty'
-import { selectWorkspaces } from '../workspaces'
-import { releaseWorkspaces } from '../releases'
+import { defineCommand } from 'citty'
+import { releaseWorkspaces } from './release'
+import { selectWorkspaces } from './args'
 
 export const main = defineCommand({
   meta: {

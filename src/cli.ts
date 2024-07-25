@@ -11,6 +11,7 @@ const main = defineCommand({
   cleanup() { },
   subCommands: {
     release: async () => import('./commands/release').then(r => r.main),
+    generate: async () => import('./commands/generate').then(r => r.main),
   },
 })
 

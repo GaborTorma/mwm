@@ -1,8 +1,8 @@
 import pnpm from '@pnpm/exec'
 import { createDependencyMap, getPackageInfos } from 'workspace-tools'
 import consola from 'consola'
-import { getNewVersion } from './versions'
 import { commitChanges } from './git'
+import { getNewVersion } from './versions'
 
 async function updateDeps(workspace: string, pkg: string, pkgVersion: string) {
   await pnpm(['--filter', workspace, 'update', `${pkg}@${pkgVersion}`])

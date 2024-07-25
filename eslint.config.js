@@ -6,7 +6,6 @@ export default antfu({
       project: [
         'tsconfig.json',
         'tsconfig.test.json',
-        'tsconfig.release.json',
       ],
     },
   },

@@ -1,5 +1,8 @@
 import { getWorkspaces } from 'workspace-tools'
 import consola from 'consola'
+import type { main } from './index'
+
+export type Args = Parameters<Required<typeof main>['run']>[0]['args']
 
 export function getValidWorkspaces(): string[] {
   const workspaces = getWorkspaces('.')

@@ -33,6 +33,11 @@
       "types": "./dist/cli.d.ts",
       "import": "./dist/cli.mjs",
       "require": "./dist/cli.cjs"
+    },
+    "./release-it-config": {
+      "types": "./dist/release-it-config.d.ts",
+      "import": "./dist/release-it-config.mjs",
+      "require": "./dist/release-it-config.cjs"
     }
   },
   "main": "./dist/index.cjs",

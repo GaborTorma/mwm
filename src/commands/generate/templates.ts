@@ -13,7 +13,7 @@ export const templates: Templates = {
   layer: {
     path: 'layers',
     templateOwner: 'GaborTorma',
-    templateRepo: 'nuxt-layer-starter',
+    templateRepo: 'mwm-nuxt-layer-template',
     replaces: [],
   },
 }

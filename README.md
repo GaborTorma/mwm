@@ -54,7 +54,7 @@ You can use `mwm.config` or `.mwmrc` files for configuration.
 
 MWM uses [unjs/c12](https://github.com/unjs/c12) for reading config files. Check the documentation for more information and all available options.
 
-See the [loadConfig](./src/config.ts) options.
+See the [loadConfig](./src/config.ts#L16) options.
 
 ### TypeScript config
 

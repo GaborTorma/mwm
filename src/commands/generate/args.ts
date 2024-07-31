@@ -58,7 +58,7 @@ export async function getPath(dir: string, name: string, template: Template): Pr
   if (dir) {
     return dir
   }
-  const repoPath = path.join(template.path, name)
+  const repoPath = path.join(template.path || '.', name)
   return consola.prompt('Set the path of the new repo', {
     type: 'text',
     placeholder: repoPath,

@@ -13,3 +13,6 @@
 [submodule "templates/workspace"]
 	path = templates/workspace
 	url = git@github.com:GaborTorma/mwm-workspace-template.git
+[submodule "templates/nuxt-layer"]
+	path = templates/nuxt-layer
+	url = git@github.com:GaborTorma/mwm-nuxt-layer-template.git

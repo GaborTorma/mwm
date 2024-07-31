@@ -1,6 +1,6 @@
 import { defineCommand } from 'citty'
 import { selectTemplate } from '../generate/templates'
-import { getSubmodule } from '../generate/args'
+import { getRepo } from '../generate/args'
 import type { Args } from '../generate/args'
 import { initRepo } from './init'
 
@@ -13,20 +13,20 @@ export const main = defineCommand({
     owner: {
       alias: 'organization',
       type: 'string',
-      description: 'Owner (organization) of the new submodule',
+      description: 'Owner (organization) of the new repo',
     },
     name: {
       type: 'string',
-      description: 'Name of the new submodule',
+      description: 'Name of the new repo',
     },
     description: {
       alias: 'desc',
       type: 'string',
-      description: 'Description of the new submodule',
+      description: 'Description of the new repo',
     },
     dir: {
       type: 'string',
-      description: 'Directory to clone the new submodule',
+      description: 'Directory to clone the new repo',
     },
     private: {
       type: 'boolean',
@@ -37,8 +37,8 @@ export const main = defineCommand({
 
   async run({ args }) {
     const template = await selectTemplate('workspace')
-    const submodule = await getSubmodule(args as Args, template)
+    const repo = await getRepo(args as Args, template)
 
-    await initRepo(template, submodule)
+    await initRepo(template, repo)
   },
 })

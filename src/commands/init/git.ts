@@ -1,14 +1,14 @@
 import git from 'simple-git'
-import type { Submodule } from '../generate/args'
+import type { Repo } from '../generate/args'
 
-function getRepoUrlFromSubmodule({
+function getRepoUrl({
   owner: { id, token },
   name,
-}: Submodule) {
+}: Repo) {
   return `https://${id}:${token}@github.com/${id}/${name}.git`
 }
 
-export async function cloneRepo(submodule: Submodule) {
-  const repoUrl = getRepoUrlFromSubmodule(submodule)
-  return git().clone(repoUrl, submodule.path)
+export async function cloneRepo(repo: Repo) {
+  const repoUrl = getRepoUrl(repo)
+  return git().clone(repoUrl, repo.path)
 }

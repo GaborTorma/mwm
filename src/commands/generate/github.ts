@@ -1,16 +1,16 @@
 import { Octokit } from '@octokit/rest'
-import type { Submodule } from './args'
+import type { Repo } from './args'
 import type { Template } from './templates'
 
-export async function generateGitHubRepo(template: Template, submodule: Submodule) {
+export async function generateGitHubRepo(template: Template, repo: Repo) {
   const octokit = new Octokit({
-    auth: submodule.owner.token,
+    auth: repo.owner.token,
   })
   await octokit.request(`POST /repos/${template.templateOwner}/${template.templateRepo}/generate`, {
-    owner: submodule.owner.id,
-    name: submodule.name,
-    description: submodule.description,
-    private: submodule.private,
+    owner: repo.owner.id,
+    name: repo.name,
+    description: repo.description,
+    private: repo.private,
     include_all_branches: false,
     headers: {
       'X-GitHub-Api-Version': '2022-11-28',

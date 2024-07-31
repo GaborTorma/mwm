@@ -63,7 +63,7 @@ export async function getPath(dir: string, name: string, template: Template): Pr
   })
 }
 
-export interface Submodule {
+export interface Repo {
   owner: OwnerWithId
   name: string
   description: string
@@ -71,15 +71,14 @@ export interface Submodule {
   private: boolean
 }
 
-export async function getSubmodule(args: Args, template: Template): Promise<Submodule> {
+export async function getRepo(args: Args, template: Template): Promise<Repo> {
   const { config } = await loadConfig()
   const name = await getName(args.name)
-  const submodule: Submodule = {
+  return {
     owner: await selectOwner(args.owner, config.owners),
     name,
     description: await getDescription(args.description),
     path: await getPath(args.dir, name, template),
     private: args.private,
   }
-  return submodule
 }

@@ -1,7 +1,26 @@
 import defu from 'defu'
 import type { Config } from 'release-it'
 
-function defConfigForPackage(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
+function defineConfigForWorkspace(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
+  return {
+    git: {
+      requireCleanWorkingDir: true,
+      commitMessage,
+      tagAnnotation,
+      tagName,
+      requireCommits: true,
+      requireCommitsFail: false,
+    },
+    github: {
+      release: true,
+    },
+    npm: {
+      publish: false,
+    },
+  } satisfies Config
+}
+
+function defineConfigForPackage(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
   return {
     git: {
       commitMessage,
@@ -19,7 +38,7 @@ function defConfigForPackage(commitMessage: string, tagName: string, tagAnnotati
   } satisfies Config
 }
 
-function defConfigForRelease(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
+function defineConfigForRelease(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
   return {
     git: {
       commitMessage,
@@ -37,7 +56,7 @@ function defConfigForRelease(commitMessage: string, tagName: string, tagAnnotati
   } satisfies Config
 }
 
-function defConfigForNuxtLayer(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
+function defineConfigForNuxtLayer(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
   return {
     git: {
       commitMessage,
@@ -55,7 +74,7 @@ function defConfigForNuxtLayer(commitMessage: string, tagName: string, tagAnnota
   } satisfies Config
 }
 
-type Preset = 'package' | 'release' | 'nuxt-layer'
+type Preset = 'workspace' | 'package' | 'release' | 'nuxt-layer'
 
 export function defineReleaseItConfig(preset: Preset, name?: string, config?: Config): Config {
   // eslint-disable-next-line no-template-curly-in-string
@@ -70,11 +89,13 @@ export function defineReleaseItConfig(preset: Preset, name?: string, config?: Co
     : `v-${versionTemplate}`
 
   switch (preset) {
+    case 'workspace':
+      return defu(config, defineConfigForWorkspace(commitMessage, tagName))
     case 'package':
-      return defu(config, defConfigForPackage(commitMessage, tagName))
+      return defu(config, defineConfigForPackage(commitMessage, tagName))
     case 'release':
-      return defu(config, defConfigForRelease(commitMessage, tagName))
+      return defu(config, defineConfigForRelease(commitMessage, tagName))
     case 'nuxt-layer':
-      return defu(config, defConfigForNuxtLayer(commitMessage, tagName))
+      return defu(config, defineConfigForNuxtLayer(commitMessage, tagName))
   }
 }

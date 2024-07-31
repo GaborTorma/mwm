@@ -24,10 +24,10 @@
     "workspace"
   ],
   "exports": {
-    "./cli": {
-      "types": "./dist/cli.d.ts",
-      "import": "./dist/cli.mjs",
-      "require": "./dist/cli.cjs"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./generate": {
       "types": "./dist/commands/generate/generate.d.ts",
@@ -38,16 +38,11 @@
       "types": "./dist/commands/release/release.d.ts",
       "import": "./dist/commands/release/release.mjs",
       "require": "./dist/commands/release/release.cjs"
-    },
-    "./release-it-config": {
-      "types": "./dist/release-it-config.d.ts",
-      "import": "./dist/release-it-config.mjs",
-      "require": "./dist/release-it-config.cjs"
     }
   },
-  "main": "./dist/cli.cjs",
-  "module": "./dist/cli.mjs",
-  "types": "./dist/cli.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "bin": {
     "mwm": "./bin/cli.js"
   },

@@ -10,3 +10,6 @@
 [submodule "playground/app2"]
 	path = playground/app2
 	url = git@github.com:GaborTorma/mwm-app2.git
+[submodule "templates/workspace"]
+	path = templates/workspace
+	url = git@github.com:GaborTorma/mwm-workspace-template.git

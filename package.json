@@ -72,6 +72,7 @@
     "defu": "^6.1.4",
     "pnpm": "^9.6.0",
     "release-it": "^17.6.0",
+    "simple-git": "^3.25.0",
     "workspace-tools": "^0.36.4"
   },
   "devDependencies": {

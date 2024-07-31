@@ -5,6 +5,10 @@ export interface Owner {
   token?: string
 }
 
+export interface OwnerWithId extends Owner {
+  id: string
+}
+
 export type Owners = Record<string, Owner>
 
 interface MWMConfig {

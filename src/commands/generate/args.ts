@@ -1,6 +1,7 @@
 import path from 'node:path'
 import consola from 'consola'
-import { type Owner, type Owners, loadConfig } from '../../config'
+import type { OwnerWithId, Owners } from '../../config'
+import { loadConfig } from '../../config'
 import type { Template } from './templates'
 import type { main } from './index'
 
@@ -11,10 +12,6 @@ export async function getArg(arg: string, prompt: string): Promise<string> {
     || consola.prompt(prompt, {
       type: 'text',
     })
-}
-
-interface OwnerWithId extends Owner {
-  id: string
 }
 
 export async function selectOwner(owner: string, owners: Owners): Promise<OwnerWithId> {
@@ -58,7 +55,7 @@ export async function getPath(dir: string, name: string, template: Template): Pr
   if (dir) {
     return dir
   }
-  const repoPath = path.join(template.path || '.', name)
+  const repoPath = path.join(template.path, name)
   return consola.prompt('Set the path of the new repo', {
     type: 'text',
     placeholder: repoPath,
@@ -70,18 +67,19 @@ export interface Submodule {
   owner: OwnerWithId
   name: string
   description: string
-  path?: string
+  path: string
   private: boolean
 }
 
 export async function getSubmodule(args: Args, template: Template): Promise<Submodule> {
   const { config } = await loadConfig()
+  const name = await getName(args.name)
   const submodule: Submodule = {
     owner: await selectOwner(args.owner, config.owners),
-    name: await getName(args.name),
+    name,
     description: await getDescription(args.description),
+    path: await getPath(args.dir, name, template),
     private: args.private,
   }
-  submodule.path = await getPath(args.dir, submodule.name, template)
   return submodule
 }

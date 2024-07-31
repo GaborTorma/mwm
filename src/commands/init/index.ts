@@ -1,8 +1,8 @@
 import { defineCommand } from 'citty'
 import { selectTemplate } from '../generate/templates'
-import { generateRepo } from '../generate/generate'
 import { getSubmodule } from '../generate/args'
 import type { Args } from '../generate/args'
+import { initRepo } from './init'
 
 export const main = defineCommand({
   meta: {
@@ -24,15 +24,14 @@ export const main = defineCommand({
       type: 'string',
       description: 'Description of the new submodule',
     },
+    dir: {
+      type: 'string',
+      description: 'Directory to clone the new submodule',
+    },
     private: {
       type: 'boolean',
       default: true,
       description: 'Create a non-private repository',
-    },
-    dir: {
-      type: 'string',
-      default: '.',
-      description: 'Directory to clone the new submodule',
     },
   },
 
@@ -40,6 +39,6 @@ export const main = defineCommand({
     const template = await selectTemplate('workspace')
     const submodule = await getSubmodule(args as Args, template)
 
-    await generateRepo(template, submodule)
+    await initRepo(template, submodule)
   },
 })

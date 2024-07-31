@@ -1,7 +1,7 @@
 import consola from 'consola'
 
 export interface Template {
-  path?: string
+  path: string
   templateOwner: string
   templateRepo: string
   replaces?: string[]
@@ -16,14 +16,15 @@ export type TemplateType = typeof templateTypes[number]
 export type Templates = Record<TemplateType, Template>
 
 export const templates: Templates = {
+  workspace: {
+    path: '.',
+    templateOwner: 'GaborTorma',
+    templateRepo: 'mwm-workspace-template',
+  },
   layer: {
     path: 'layers',
     templateOwner: 'GaborTorma',
     templateRepo: 'mwm-nuxt-layer-template',
-  },
-  workspace: {
-    templateOwner: 'GaborTorma',
-    templateRepo: 'mwm-workspace-template',
   },
 } as const
 

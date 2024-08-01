@@ -1,15 +1,6 @@
 import antfu from '@gabortorma/antfu-eslint-config'
 
-export default antfu({
-  typescript: {
-    parserOptions: {
-      project: [
-        'tsconfig.json',
-        'tsconfig.test.json',
-      ],
-    },
-  },
-}, {
+export default antfu({}, {
   rules: {
     'ts/strict-boolean-expressions': 'off',
   },

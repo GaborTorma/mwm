@@ -72,11 +72,13 @@
     "defu": "^6.1.4",
     "pnpm": "^9.6.0",
     "release-it": "^17.6.0",
+    "replace-in-file": "^8.1.0",
     "simple-git": "^3.25.0",
     "workspace-tools": "^0.36.4"
   },
   "devDependencies": {
     "@gabortorma/antfu-eslint-config": "0.5.16",
+    "@octokit/types": "^13.5.0",
     "@types/node": "^20.14.12",
     "dotenv-cli": "^7.4.2",
     "jiti": "^1.21.6",

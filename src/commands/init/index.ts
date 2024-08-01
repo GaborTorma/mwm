@@ -1,8 +1,8 @@
 import { defineCommand } from 'citty'
-import { selectTemplate } from '../generate/templates'
 import { getRepo } from '../generate/args'
 import type { Args } from '../generate/args'
 import { initRepo } from './init'
+import { workspaceTemplate } from './templates/workspace'
 
 export const main = defineCommand({
   meta: {
@@ -36,7 +36,7 @@ export const main = defineCommand({
   },
 
   async run({ args }) {
-    const template = await selectTemplate('workspace')
+    const template = workspaceTemplate
     const repo = await getRepo(args as Args, template)
 
     await initRepo(template, repo)

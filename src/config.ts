@@ -1,7 +1,7 @@
 import { loadConfig as _loadConfig, createDefineConfig } from 'c12'
 
 export interface Owner {
-  description?: string
+  name?: string // used in package.json author field
   token?: string
 }
 

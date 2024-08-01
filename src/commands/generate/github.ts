@@ -6,7 +6,7 @@ export async function generateGitHubRepo(template: Template, repo: Repo) {
   const octokit = new Octokit({
     auth: repo.owner.token,
   })
-  await octokit.request(`POST /repos/${template.templateOwner}/${template.templateRepo}/generate`, {
+  await octokit.request(`POST /repos/${template.owner}/${template.repo}/generate`, {
     owner: repo.owner.id,
     name: repo.name,
     description: repo.description,

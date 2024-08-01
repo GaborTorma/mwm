@@ -5,8 +5,9 @@ import type { Template } from '.'
 
 export const layerTemplate: Template = {
   path: 'layers',
-  templateOwner: 'GaborTorma',
-  templateRepo: 'mwm-nuxt-layer-template',
+  owner: 'GaborTorma',
+  repo: 'mwm-nuxt-layer-template',
+  branch: 'main',
   getReplacements(repo: Repo): Replacements {
     return [
       ...getPackageReplacements(repo),

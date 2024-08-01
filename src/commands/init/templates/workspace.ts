@@ -5,8 +5,9 @@ import type { Template } from '../../generate/templates'
 
 export const workspaceTemplate: Template = {
   path: '.',
-  templateOwner: 'GaborTorma',
-  templateRepo: 'mwm-workspace-template',
+  owner: 'GaborTorma',
+  repo: 'mwm-workspace-template',
+  branch: 'main',
   getReplacements(repo: Repo): Replacements {
     return [
       ...getPackageReplacements(repo),

@@ -51,8 +51,8 @@
     "scss",
     "pcss",
     "postcss"
-  ]
+  ],
 
   // Ignore the submodules from commit
-  // "git.ignoreSubmodules": true
+  "git.ignoreSubmodules": true
 }

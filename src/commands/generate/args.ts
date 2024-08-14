@@ -2,16 +2,19 @@ import path from 'node:path'
 import consola from 'consola'
 import type { OwnerWithId, Owners } from '../../config'
 import { loadConfig } from '../../config'
+import { checkCancel } from '../../utils'
 import type { Template } from './templates'
 import type { main } from './index'
 
 export type Args = Parameters<Required<typeof main>['run']>[0]['args']
 
 export async function getArg(arg: string, prompt: string): Promise<string> {
-  return arg
-    || consola.prompt(prompt, {
+  const result = arg
+    || await consola.prompt(prompt, {
       type: 'text',
     })
+  checkCancel(result)
+  return result
 }
 
 export async function selectOwner(owner: string, owners: Owners): Promise<OwnerWithId> {
@@ -36,6 +39,7 @@ export async function selectOwner(owner: string, owners: Owners): Promise<OwnerW
       type: 'select',
       options,
     })
+    checkCancel(owner)
   }
   return {
     id: owner,
@@ -56,11 +60,13 @@ export async function getPath(dir: string, name: string, template: Template): Pr
     return dir
   }
   const repoPath = path.join(template.path, name)
-  return consola.prompt('Set the path of the new repo', {
+  const result = consola.prompt('Set the path of the new repo', {
     type: 'text',
     placeholder: repoPath,
     default: repoPath,
   })
+  checkCancel(result)
+  return result
 }
 
 export interface Repo {

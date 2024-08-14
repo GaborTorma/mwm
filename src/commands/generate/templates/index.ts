@@ -4,6 +4,7 @@ import type { SimpleGit } from 'simple-git'
 import simpleGit from 'simple-git'
 import type { Repo } from '../args'
 import type { Replacements } from '../replace'
+import { checkCancel } from '../../../utils'
 import { layerTemplate } from './layer'
 
 const templateTypes = ['layer']
@@ -30,6 +31,7 @@ export async function selectTemplate(template: string): Promise<Template> {
       type: 'select',
       options: templateTypes,
     })
+    checkCancel(template)
   }
   return templates[template]
 }

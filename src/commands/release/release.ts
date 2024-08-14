@@ -1,13 +1,22 @@
 import pnpm from '@pnpm/exec'
 import consola from 'consola'
+import { checkCancel } from '../../utils'
 import { isWorkspaceClean } from './git'
 import { getNewVersion } from './versions'
 import { fixDependencies, getDependencies, getDependentsWithoutWorkspaces } from './dependencies'
 import { packageFiles } from './files'
 
+async function confirmMessage(message: string): Promise<boolean> {
+  const result = await consola.prompt(message, {
+    type: 'confirm',
+  })
+  checkCancel(result)
+  return result
+}
+
 async function promptToContinue(workspace: string): Promise<boolean> {
   const message = `${workspace} workspace ${packageFiles.join(' or ')} file modified.\nWanna continue release?`
-  return consola.prompt(message, { type: 'confirm' })
+  return confirmMessage(message)
 }
 
 async function promptToReleaseDependent(dependent: string, dependency: string): Promise<boolean> {
@@ -16,12 +25,12 @@ async function promptToReleaseDependent(dependent: string, dependency: string): 
     return false
 
   const message = `${dependent} dependent of ${dependency}.\nWanna fix ${dependent}?`
-  return consola.prompt(message, { type: 'confirm' })
+  return confirmMessage(message)
 }
 
 async function promptToReleaseWorkspace(workspace: string): Promise<boolean> {
   const message = `Wanna create a release from ${workspace}?`
-  return consola.prompt(message, { type: 'confirm' })
+  return confirmMessage(message)
 }
 
 async function checkWorkspaceToContinue(workspace: string) {

@@ -1,5 +1,6 @@
 import { getWorkspaces } from 'workspace-tools'
 import consola from 'consola'
+import { checkCancel } from '../../utils'
 import type { main } from './index'
 
 export type Args = Parameters<Required<typeof main>['run']>[0]['args']
@@ -35,12 +36,12 @@ export async function getSelectedWorkspaces(filter: Filter): Promise<Set<string>
   if (Array.isArray(filter))
     return getCheckedWorkspaces(filter, validWorkspaces)
 
-  return new Set<string>(
-    await consola.prompt('Select workspaces', {
-      type: 'multiselect',
-      options: validWorkspaces,
-    }),
-  )
+  const workspaces = await consola.prompt('Select workspaces', {
+    type: 'multiselect',
+    options: validWorkspaces,
+  })
+  checkCancel(workspaces)
+  return new Set<string>(workspaces)
 }
 
 export async function selectWorkspaces(filter: Filter): Promise<Set<string>> {

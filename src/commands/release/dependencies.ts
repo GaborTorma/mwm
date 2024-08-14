@@ -1,11 +1,11 @@
-import pnpm from '@pnpm/exec'
 import { createDependencyMap, getPackageInfos } from 'workspace-tools'
 import consola from 'consola'
+import { pnpmExec } from '../../utils/pnpm'
 import { commitChanges } from './git'
 import { getNewVersion } from './versions'
 
-async function updateDeps(workspace: string, pkg: string, pkgVersion: string) {
-  await pnpm(['--filter', workspace, 'update', `${pkg}@${pkgVersion}`])
+function updateDeps(workspace: string, pkg: string, pkgVersion: string) {
+  pnpmExec(['--filter', workspace, 'update', `${pkg}@${pkgVersion}`])
 }
 
 export async function fixDependencies(workspace: string, pkg: string) {
@@ -15,7 +15,7 @@ export async function fixDependencies(workspace: string, pkg: string) {
     return
   }
   consola.log(`New version found from ${pkg}:`, newVersion)
-  await updateDeps(workspace, pkg, newVersion)
+  updateDeps(workspace, pkg, newVersion)
   commitChanges(workspace, pkg, newVersion)
 }
 

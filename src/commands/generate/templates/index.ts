@@ -4,7 +4,7 @@ import type { SimpleGit } from 'simple-git'
 import simpleGit from 'simple-git'
 import type { Repo } from '../args'
 import type { Replacements } from '../replace'
-import { checkCancel } from '../../../utils'
+import { checkCancel } from '../../../utils/args'
 import { layerTemplate } from './layer'
 
 const templateTypes = ['layer']

@@ -2,7 +2,7 @@ import path from 'node:path'
 import consola from 'consola'
 import type { OwnerWithId, Owners } from '../../config'
 import { loadConfig } from '../../config'
-import { checkCancel } from '../../utils'
+import { checkCancel } from '../../utils/args'
 import type { Template } from './templates'
 import type { main } from './index'
 

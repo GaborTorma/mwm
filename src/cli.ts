@@ -1,6 +1,6 @@
 import { runMain as _runMain, defineCommand } from 'citty'
 import { description, name, version } from '../package.json'
-import { checkPnpm } from './utils'
+import { checkPnpm } from './utils/pnpm'
 
 const main = defineCommand({
   meta: {
@@ -18,6 +18,6 @@ const main = defineCommand({
 })
 
 export async function runMain() {
-  await checkPnpm()
+  checkPnpm()
   await _runMain(main)
 }

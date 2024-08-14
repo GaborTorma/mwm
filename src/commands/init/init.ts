@@ -1,8 +1,8 @@
-import pnpm from '@pnpm/exec'
 import type { Repo } from '../generate/args'
 import { generateGitHubRepo } from '../generate/github'
 import { fixFiles, replaceInFiles } from '../generate/replace'
 import { type Template, addRemoteTemplate, commitInitChanges, pushChanges } from '../generate/templates'
+import { pnpmExec } from '../../utils/pnpm'
 import { cloneRepo } from './git'
 
 async function sleep(ms: number) {
@@ -17,7 +17,7 @@ export async function initRepo(template: Template, repo: Repo) {
   const replacements = template.getReplacements(repo)
   fixFiles(replacements, repo.path)
   await replaceInFiles(replacements)
-  await pnpm(['install'], { cwd: repo.path })
+  pnpmExec(['install'], { cwd: repo.path })
   await commitInitChanges(repo)
   await pushChanges(repo)
 }

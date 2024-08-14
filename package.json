@@ -64,7 +64,6 @@
   },
   "dependencies": {
     "@octokit/rest": "^21.0.1",
-    "@pnpm/exec": "^2.0.0",
     "c12": "^1.11.1",
     "citty": "^0.1.6",
     "compare-versions": "^6.1.1",

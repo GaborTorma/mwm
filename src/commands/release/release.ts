@@ -1,6 +1,6 @@
-import pnpm from '@pnpm/exec'
 import consola from 'consola'
-import { checkCancel } from '../../utils'
+import { checkCancel } from '../../utils/args'
+import { pnpmExec } from '../../utils/pnpm'
 import { isWorkspaceClean } from './git'
 import { getNewVersion } from './versions'
 import { fixDependencies, getDependencies, getDependentsWithoutWorkspaces } from './dependencies'
@@ -38,8 +38,8 @@ async function checkWorkspaceToContinue(workspace: string) {
     || await promptToContinue(workspace)
 }
 
-async function releasePackage(pkg: string) {
-  await pnpm(['--filter', pkg, 'release'])
+function releasePackage(pkg: string) {
+  pnpmExec(['--filter', pkg, 'release'])
 }
 
 export async function releaseWorkspace(workspace: string, releaseDependencies: boolean, workspaces: Set<string>, release?: boolean) {
@@ -60,7 +60,7 @@ export async function releaseWorkspace(workspace: string, releaseDependencies: b
   }
 
   if (release === true || await promptToReleaseWorkspace(workspace)) {
-    await releasePackage(workspace)
+    releasePackage(workspace)
     workspaces.delete(workspace)
     const dependents = getDependentsWithoutWorkspaces(workspace, workspaces)
     for (const dependent of dependents) {

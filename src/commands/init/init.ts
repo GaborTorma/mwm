@@ -3,11 +3,8 @@ import { generateGitHubRepo } from '../generate/github'
 import { fixFiles, replaceInFiles } from '../generate/replace'
 import { type Template, addRemoteTemplate, commitInitChanges, pushChanges } from '../generate/templates'
 import { pnpmExec } from '../../utils/pnpm'
+import { sleep } from '../../utils/sleep'
 import { cloneRepo } from './git'
-
-async function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
 
 export async function initRepo(template: Template, repo: Repo) {
   await generateGitHubRepo(template, repo)

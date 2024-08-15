@@ -5,7 +5,6 @@ import consola from 'consola'
 
 export function checkPnpm() {
   try {
-    console.log('Checking pnpm version...')
     const version = execSync('pnpm --version', { encoding: 'utf-8' })
     if (!version.startsWith('9'))
       consola.error('pnpm version is not 9. Please install pnpm 9. See https://pnpm.io/installation')

@@ -17,7 +17,7 @@ export async function getArg(arg: string, prompt: string): Promise<string> {
   return result
 }
 
-export async function selectOwner(owner: string, owners: Owners): Promise<OwnerWithId> {
+export async function selectOwner(owner: string, owners?: Owners): Promise<OwnerWithId> {
   if (!owners) {
     throw new Error('No owners found! Please add owners to the config file')
   }

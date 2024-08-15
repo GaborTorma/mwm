@@ -12,7 +12,7 @@ export interface OwnerWithId extends Owner {
 export type Owners = Record<string, Owner>
 
 interface MWMConfig {
-  owners: Owners
+  owners?: Owners
 }
 
 export async function loadConfig() {

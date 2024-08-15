@@ -16,3 +16,6 @@
 [submodule "templates/nuxt-layer"]
 	path = templates/nuxt-layer
 	url = git@github.com:GaborTorma/mwm-nuxt-layer-template.git
+[submodule "releases/antfu-eslint-config"]
+	path = releases/antfu-eslint-config
+	url = git@github.com:GaborTorma/antfu-eslint-config.git

@@ -10,7 +10,7 @@ export function checkPnpm() {
       consola.error('pnpm version is not 9. Please install pnpm 9. See https://pnpm.io/installation')
   }
   catch (error) {
-    consola.error('pnpm is not installed. Please install pnpm first. See https://pnpm.io/installation')
+    consola.error('pnpm is not installed. Please install pnpm first. See https://pnpm.io/installation', error)
     process.exit(1)
   }
 }

@@ -1,15 +1,3 @@
-[submodule "playground/package1"]
-	path = playground/package1
-	url = git@github.com:gt-packages/mwm-package1
-[submodule "playground/package2"]
-	path = playground/package2
-	url = git@github.com:gt-packages/mwm-package2
-[submodule "playground/app1"]
-	path = playground/app1
-	url = git@github.com:GaborTorma/mwm-app1.git
-[submodule "playground/app2"]
-	path = playground/app2
-	url = git@github.com:GaborTorma/mwm-app2.git
 [submodule "templates/workspace"]
 	path = templates/workspace
 	url = git@github.com:GaborTorma/mwm-workspace-template.git

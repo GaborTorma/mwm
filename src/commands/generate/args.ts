@@ -8,7 +8,7 @@ import type { main } from './index'
 
 export type Args = Parameters<Required<typeof main>['run']>[0]['args']
 
-export async function selectOwner(owner: string, owners: Owners): Promise<OwnerWithId> {
+export async function selectOwner(owner: string, owners?: Owners): Promise<OwnerWithId> {
   if (!owners) {
     throw new Error('No owners found! Please add owners to the config file')
   }

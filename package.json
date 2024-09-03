@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^21.0.2",
-    "c12": "^1.11.1",
+    "c12": "^1.11.2",
     "citty": "^0.1.6",
     "compare-versions": "^6.1.1",
     "consola": "^3.2.3",
@@ -72,13 +72,13 @@
     "pnpm": "^9.9.0",
     "release-it": "^17.6.0",
     "replace-in-file": "^8.1.0",
-    "simple-git": "^3.25.0",
+    "simple-git": "^3.26.0",
     "workspace-tools": "^0.36.4"
   },
   "devDependencies": {
     "@gabortorma/antfu-eslint-config": "latest",
     "@octokit/types": "^13.5.0",
-    "@types/node": "^20.16.2",
+    "@types/node": "^20.16.3",
     "dotenv-cli": "^7.4.2",
     "jiti": "^1.21.6",
     "typescript": "^5.5.4",

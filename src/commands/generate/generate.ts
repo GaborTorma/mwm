@@ -1,10 +1,10 @@
-import { sleep } from '../../utils/sleep'
 import { pnpmExec } from '../../utils/pnpm'
-import type { Repo } from './args'
-import { type Template, addRemoteTemplate, commitInitChanges, pushChanges } from './templates'
+import { sleep } from '../../utils/sleep'
+import { addSubmodule } from './git'
 import { generateGitHubRepo } from './github'
 import { fixFiles, replaceInFiles } from './replace'
-import { addSubmodule } from './git'
+import { addRemoteTemplate, commitInitChanges, pushChanges, type Template } from './templates'
+import type { Repo } from './args'
 
 export async function generateRepo(template: Template, repo: Repo) {
   await generateGitHubRepo(template, repo)

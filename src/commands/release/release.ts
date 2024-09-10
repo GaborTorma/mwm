@@ -1,10 +1,10 @@
 import consola from 'consola'
 import { checkCancel } from '../../utils/args'
 import { pnpmExec } from '../../utils/pnpm'
-import { isWorkspaceClean } from './git'
-import { getNewVersion } from './versions'
 import { fixDependencies, getDependencies, getDependentsWithoutWorkspaces } from './dependencies'
 import { packageFiles } from './files'
+import { isWorkspaceClean } from './git'
+import { getNewVersion } from './versions'
 
 async function confirmMessage(message: string): Promise<boolean> {
   const result = await consola.prompt(message, {

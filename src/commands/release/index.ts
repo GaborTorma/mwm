@@ -1,6 +1,6 @@
 import { defineCommand } from 'citty'
-import { releaseWorkspaces } from './release'
 import { selectWorkspaces } from './args'
+import { releaseWorkspaces } from './release'
 
 export const main = defineCommand({
   meta: {

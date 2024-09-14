@@ -1,6 +1,6 @@
 import { defineCommand } from 'citty'
-import { getDir, getUrl } from './args'
 import { addSubmodule } from './add'
+import { getDir, getUrl } from './args'
 
 export const main = defineCommand({
   meta: {

@@ -1,11 +1,11 @@
 import path from 'node:path'
 import consola from 'consola'
-import type { SimpleGit } from 'simple-git'
 import simpleGit from 'simple-git'
-import type { Repo } from '../args'
-import type { Replacements } from '../replace'
+import type { SimpleGit } from 'simple-git'
 import { checkCancel } from '../../../utils/args'
 import { layerTemplate } from './layer'
+import type { Repo } from '../args'
+import type { Replacements } from '../replace'
 
 const templateTypes = ['layer']
 

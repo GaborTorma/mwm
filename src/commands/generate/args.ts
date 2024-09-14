@@ -1,10 +1,10 @@
 import path from 'node:path'
 import consola from 'consola'
-import type { OwnerWithId, Owners } from '../../config'
 import { loadConfig } from '../../config'
 import { checkCancel, getArg } from '../../utils/args'
-import type { Template } from './templates'
+import type { Owners, OwnerWithId } from '../../config'
 import type { main } from './index'
+import type { Template } from './templates'
 
 export type Args = Parameters<Required<typeof main>['run']>[0]['args']
 

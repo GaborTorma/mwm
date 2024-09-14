@@ -4,3 +4,6 @@
 [submodule "templates/nuxt-layer"]
 	path = templates/nuxt-layer
 	url = git@github.com:GaborTorma/mwm-nuxt-layer-template.git
+[submodule "templates/nuxt-module"]
+	path = templates/nuxt-module
+	url = https://github.com/GaborTorma/mwm-nuxt-module-template.git

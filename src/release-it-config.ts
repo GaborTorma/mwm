@@ -1,5 +1,5 @@
-import defu from 'defu'
 import type { Config } from 'release-it'
+import defu from 'defu'
 
 function defineConfigForWorkspace(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
   return {

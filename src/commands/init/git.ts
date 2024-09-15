@@ -1,5 +1,5 @@
-import git from 'simple-git'
 import type { Repo } from '../generate/args'
+import git from 'simple-git'
 
 export function getRepoUrl({
   owner: { id, token },

@@ -1,7 +1,7 @@
+import type { main } from './index'
 import consola from 'consola'
 import { getWorkspaces } from 'workspace-tools'
 import { checkCancel } from '../../utils/args'
-import type { main } from './index'
 
 export type Args = Parameters<Required<typeof main>['run']>[0]['args']
 

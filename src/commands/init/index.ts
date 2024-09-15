@@ -1,8 +1,8 @@
+import type { Args } from '../generate/args'
 import { defineCommand } from 'citty'
 import { getRepo } from '../generate/args'
 import { initRepo } from './init'
 import { workspaceTemplate } from './templates/workspace'
-import type { Args } from '../generate/args'
 
 export const main = defineCommand({
   meta: {

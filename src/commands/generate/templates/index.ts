@@ -1,13 +1,13 @@
+import type { SimpleGit } from 'simple-git'
+import type { Repo } from '../args'
+import type { Replacements } from '../replace'
 import path from 'node:path'
 import consola from 'consola'
 import simpleGit from 'simple-git'
-import type { SimpleGit } from 'simple-git'
 import { checkCancel } from '../../../utils/args'
+import { nitroPluginTemplate } from './nitro-plugin'
 import { nuxtLayerTemplate } from './nuxt-layer'
 import { nuxtModuleTemplate } from './nuxt-module'
-import { nitroPluginTemplate } from './nitro-plugin'
-import type { Repo } from '../args'
-import type { Replacements } from '../replace'
 
 const templateTypes = ['nuxt-layer', 'nuxt-module', 'nitro-plugin']
 

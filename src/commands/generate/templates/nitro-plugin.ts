@@ -1,7 +1,7 @@
-import { getPackageReplacements } from './package'
 import type { Template } from '.'
 import type { Repo } from '../args'
 import type { Replacements } from '../replace'
+import { getPackageReplacements } from './package'
 
 export const nitroPluginTemplate: Template = {
   path: 'releases',

@@ -1,6 +1,6 @@
+import type { PackageInfo } from 'workspace-tools'
 import { compareVersions } from 'compare-versions'
 import { getPackageInfos } from 'workspace-tools'
-import type { PackageInfo } from 'workspace-tools'
 
 function hasOldVersion(dependencies: PackageInfo['dependencies'], pkg: string, version: string): boolean {
   if (!dependencies?.[pkg])

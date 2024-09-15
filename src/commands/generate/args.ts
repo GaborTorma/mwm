@@ -1,10 +1,10 @@
-import path from 'node:path'
-import consola from 'consola'
-import { loadConfig } from '../../config'
-import { checkCancel, getArg } from '../../utils/args'
 import type { Owners, OwnerWithId } from '../../config'
 import type { main } from './index'
 import type { Template } from './templates'
+import path from 'node:path'
+import consola from 'consola'
+import { loadConfig } from '../../config'
+import { checkCancel, getBoolArg, getStringArg } from '../../utils/args'
 
 export type Args = Parameters<Required<typeof main>['run']>[0]['args']
 
@@ -39,11 +39,11 @@ export async function selectOwner(owner: string, owners?: Owners): Promise<Owner
 }
 
 export async function getName(name: string) {
-  return getArg(name, 'Enter the name of the new repo')
+  return getStringArg(name, 'Enter the name of the new repo')
 }
 
 export async function getDescription(description: string) {
-  return getArg(description, 'Enter the description of the new repo')
+  return getStringArg(description, 'Enter the description of the new repo')
 }
 
 export async function getPath(dir: string, name: string, template: Template): Promise<string> {
@@ -58,6 +58,18 @@ export async function getPath(dir: string, name: string, template: Template): Pr
   })
   checkCancel(result)
   return result
+}
+
+export async function getPrivate(arg: boolean) {
+  return getBoolArg(arg, 'Create a private repository?')
+}
+
+export async function getClone(arg: boolean) {
+  return getBoolArg(arg, 'Clone the repo instead of submodule?')
+}
+
+export async function getAddRemoteTemplate(arg: boolean) {
+  return getBoolArg(arg, 'Add remote template repository?')
 }
 
 export interface Repo {
@@ -76,6 +88,6 @@ export async function getRepo(args: Args, template: Template): Promise<Repo> {
     name,
     description: await getDescription(args.description),
     path: await getPath(args.dir, name, template),
-    private: args.private,
+    private: await getPrivate(args.private),
   }
 }

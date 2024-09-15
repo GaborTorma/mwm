@@ -1,6 +1,6 @@
+import type { GitProcessOutput } from 'workspace-tools'
 import path from 'node:path'
 import { getPackageInfos, git } from 'workspace-tools'
-import type { GitProcessOutput } from 'workspace-tools'
 import { packageFiles } from './files'
 
 function processGitOutput(output: GitProcessOutput) {

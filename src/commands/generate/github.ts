@@ -1,6 +1,6 @@
-import { Octokit } from '@octokit/rest'
 import type { Repo } from './args'
 import type { Template } from './templates'
+import { Octokit } from '@octokit/rest'
 
 export async function generateGitHubRepo(template: Template, repo: Repo) {
   const octokit = new Octokit({

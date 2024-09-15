@@ -1,7 +1,7 @@
+import type { ExecSyncOptions } from 'node:child_process'
 import { execSync } from 'node:child_process'
 import process from 'node:process'
 import consola from 'consola'
-import type { ExecSyncOptions } from 'node:child_process'
 
 export function checkPnpm() {
   try {

@@ -3,10 +3,10 @@ import type { Template } from '.'
 import type { Repo } from '../args'
 import type { Replacements } from '../replace'
 
-export const layerTemplate: Template = {
-  path: 'layers',
+export const nuxtModuleTemplate: Template = {
+  path: 'modules',
   owner: 'GaborTorma',
-  repo: 'mwm-nuxt-layer-template',
+  repo: 'mwm-nuxt-module-template',
   branch: 'main',
   getReplacements(repo: Repo): Replacements {
     return [

@@ -1,6 +1,6 @@
 import { defineCommand } from 'citty'
 import { getRepo } from './args'
-import { generateRepo } from './generate'
+import { generateSubmodule } from './generate'
 import { selectTemplate } from './templates'
 
 export const main = defineCommand({
@@ -43,6 +43,6 @@ export const main = defineCommand({
     const template = await selectTemplate(args.template)
     const repo = await getRepo(args, template)
 
-    await generateRepo(template, repo)
+    await generateSubmodule(template, repo)
   },
 })

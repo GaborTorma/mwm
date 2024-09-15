@@ -6,7 +6,7 @@ import { fixFiles, replaceInFiles } from './replace'
 import { addRemoteTemplate, commitInitChanges, pushChanges, type Template } from './templates'
 import type { Repo } from './args'
 
-export async function generateRepo(template: Template, repo: Repo) {
+export async function generateSubmodule(template: Template, repo: Repo) {
   await generateGitHubRepo(template, repo)
   await sleep(2000)
   await addSubmodule(repo)

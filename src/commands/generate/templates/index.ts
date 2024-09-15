@@ -3,11 +3,13 @@ import consola from 'consola'
 import simpleGit from 'simple-git'
 import type { SimpleGit } from 'simple-git'
 import { checkCancel } from '../../../utils/args'
-import { layerTemplate } from './layer'
+import { nuxtLayerTemplate } from './nuxt-layer'
+import { nuxtModuleTemplate } from './nuxt-module'
+import { nitroPluginTemplate } from './nitro-plugin'
 import type { Repo } from '../args'
 import type { Replacements } from '../replace'
 
-const templateTypes = ['layer']
+const templateTypes = ['nuxt-layer', 'nuxt-module', 'nitro-plugin']
 
 export type TemplateType = typeof templateTypes[number]
 
@@ -22,7 +24,9 @@ export interface Template {
 export type Templates = Record<TemplateType, Template>
 
 export const templates: Templates = {
-  layer: layerTemplate,
+  'nuxt-layer': nuxtLayerTemplate,
+  'nuxt-module': nuxtModuleTemplate,
+  'nitro-plugin': nitroPluginTemplate,
 } as const
 
 export async function selectTemplate(template: string): Promise<Template> {

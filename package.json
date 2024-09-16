@@ -52,7 +52,7 @@
   ],
   "scripts": {
     "build": "unbuild",
-    "dev": "vitest dev",
+    "dev": "pnpm --filter @gabortorma/mwm-playground dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepack": "pnpm run build",

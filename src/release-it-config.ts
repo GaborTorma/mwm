@@ -56,7 +56,7 @@ function defineConfigForRelease(commitMessage: string, tagName: string, tagAnnot
   } satisfies Config
 }
 
-function defineConfigForNuxtLayer(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
+function defineConfigForNuxt(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
   return {
     git: {
       commitMessage,
@@ -74,7 +74,19 @@ function defineConfigForNuxtLayer(commitMessage: string, tagName: string, tagAnn
   } satisfies Config
 }
 
-type Preset = 'workspace' | 'package' | 'release' | 'nuxt-layer'
+function defineConfigForNuxtLayer(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
+  return defineConfigForNuxt(commitMessage, tagName, tagAnnotation)
+}
+
+function defineConfigForNuxtModule(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
+  return defineConfigForNuxt(commitMessage, tagName, tagAnnotation)
+}
+
+function defineConfigForNitroPlugin(commitMessage: string, tagName: string, tagAnnotation: string = commitMessage): Config {
+  return defineConfigForNuxt(commitMessage, tagName, tagAnnotation)
+}
+
+type Preset = 'workspace' | 'package' | 'release' | 'nuxt-layer' | 'nuxt-module' | 'nitro-plugin'
 
 export function defineReleaseItConfig(preset: Preset, name?: string, config?: Config): Config {
   // eslint-disable-next-line no-template-curly-in-string
@@ -97,5 +109,9 @@ export function defineReleaseItConfig(preset: Preset, name?: string, config?: Co
       return defu(config, defineConfigForRelease(commitMessage, tagName))
     case 'nuxt-layer':
       return defu(config, defineConfigForNuxtLayer(commitMessage, tagName))
+    case 'nuxt-module':
+      return defu(config, defineConfigForNuxtModule(commitMessage, tagName))
+    case 'nitro-plugin':
+      return defu(config, defineConfigForNitroPlugin(commitMessage, tagName))
   }
 }

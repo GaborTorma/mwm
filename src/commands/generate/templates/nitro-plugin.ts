@@ -1,7 +1,8 @@
 import type { Template } from '.'
 import type { Repo } from '../args'
 import type { Replacements } from '../replace'
-import { getPackageReplacements } from './package'
+import { packageReplacement } from '../replacements/package'
+import { getReadmeReplacement } from '../replacements/readme'
 
 export const nitroPluginTemplate: Template = {
   path: 'releases',
@@ -10,7 +11,8 @@ export const nitroPluginTemplate: Template = {
   branch: 'main',
   getReplacements(repo: Repo): Replacements {
     return [
-      ...getPackageReplacements(repo),
+      packageReplacement,
+      getReadmeReplacement(this, repo),
     ]
   },
 }

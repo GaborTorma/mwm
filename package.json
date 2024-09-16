@@ -69,6 +69,7 @@
     "compare-versions": "^6.1.1",
     "consola": "^3.2.3",
     "defu": "^6.1.4",
+    "pkg-types": "^1.2.0",
     "pnpm": "^9.10.0",
     "release-it": "^17.6.0",
     "replace-in-file": "^8.1.0",

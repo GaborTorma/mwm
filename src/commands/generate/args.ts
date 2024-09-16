@@ -1,4 +1,5 @@
 import type { Owners, OwnerWithId } from '../../config'
+import type { Args as InitArgs } from '../init/args'
 import type { main } from './index'
 import type { Template } from './templates'
 import path from 'node:path'
@@ -72,15 +73,25 @@ export async function getAddRemoteTemplate(arg: boolean) {
   return getBoolArg(arg, 'Add remote template repository?')
 }
 
+export async function getFixReplacements(arg: boolean) {
+  return getBoolArg(arg, 'Fix replacements?')
+}
+
+export function getKeywords(arg: string): string[] | undefined {
+  if (typeof arg === 'string')
+    return arg.split(',').map((keyword: string) => keyword.trim())
+}
+
 export interface Repo {
   owner: OwnerWithId
   name: string
   description: string
   path: string
   private: boolean
+  keywords?: string[]
 }
 
-export async function getRepo(args: Args, template: Template): Promise<Repo> {
+export async function getRepo(args: Args | InitArgs, template: Template): Promise<Repo> {
   const { config } = await loadConfig()
   const name = await getName(args.name)
   return {
@@ -89,5 +100,6 @@ export async function getRepo(args: Args, template: Template): Promise<Repo> {
     description: await getDescription(args.description),
     path: await getPath(args.dir, name, template),
     private: await getPrivate(args.private),
+    keywords: getKeywords(args.keywords),
   }
 }

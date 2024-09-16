@@ -26,6 +26,9 @@ importers:
       defu:
         specifier: ^6.1.4
         version: 6.1.4
+      pkg-types:
+        specifier: ^1.2.0
+        version: 1.2.0
       pnpm:
         specifier: ^9.10.0
         version: 9.10.0

@@ -1,10 +1,10 @@
 import { pnpmExec } from '../../utils/pnpm'
 import { sleep } from '../../utils/sleep'
 import { cloneRepo } from '../init/git'
-import { type Args, getAddRemoteTemplate, getClone, type Repo } from './args'
+import { type Args, getAddRemoteTemplate, getClone, getFixReplacements, type Repo } from './args'
 import { addSubmodule } from './git'
 import { generateGitHubRepo } from './github'
-import { fixFiles, replaceInFiles } from './replace'
+import { fixReplacements } from './replace'
 import { addRemoteTemplate, commitInitChanges, pushChanges, type Template } from './templates'
 
 export async function deployRepo(arg: boolean, repo: Repo) {
@@ -15,13 +15,13 @@ export async function generate(args: Args, template: Template, repo: Repo) {
   await generateGitHubRepo(template, repo)
   await sleep(2000)
   await deployRepo(args.clone, repo)
-  if (await getAddRemoteTemplate(args.addRemoteTemplate)) {
+  if (await getAddRemoteTemplate(args.addRemoteTemplate))
     await addRemoteTemplate(template, repo)
-  }
-  const replacements = template.getReplacements(repo)
-  fixFiles(replacements, repo.path)
-  await replaceInFiles(replacements)
+
+  if (await getFixReplacements(args.fixReplacements))
+    await fixReplacements(template.getReplacements(repo), repo)
   pnpmExec(['install'], { cwd: repo.path })
+  pnpmExec(['lint:fix'], { cwd: repo.path })
   await commitInitChanges(repo)
   await pushChanges(repo)
 }

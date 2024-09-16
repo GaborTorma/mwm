@@ -1,7 +1,8 @@
 import type { Template } from '.'
 import type { Repo } from '../args'
 import type { Replacements } from '../replace'
-import { getPackageReplacements } from './package'
+import { packageReplacement } from '../replacements/package'
+import { getReadmeReplacement } from '../replacements/readme'
 
 export const nuxtLayerTemplate: Template = {
   path: 'layers',
@@ -10,7 +11,8 @@ export const nuxtLayerTemplate: Template = {
   branch: 'main',
   getReplacements(repo: Repo): Replacements {
     return [
-      ...getPackageReplacements(repo),
+      packageReplacement,
+      getReadmeReplacement(this, repo),
     ]
   },
 }

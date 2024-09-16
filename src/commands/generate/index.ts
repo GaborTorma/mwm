@@ -37,6 +37,10 @@ export const main = defineCommand({
       default: false,
       description: 'Create a private repository',
     },
+    keywords: {
+      type: 'string',
+      description: 'Keywords (comma separated)',
+    },
     clone: {
       type: 'boolean',
       description: 'Clone the repo instead of submodule',
@@ -45,6 +49,11 @@ export const main = defineCommand({
       alias: 'add-remote-template',
       type: 'boolean',
       description: 'Add remote template repository',
+    },
+    fixReplacements: {
+      alias: 'fix-replacements',
+      type: 'boolean',
+      description: 'Fix replacements',
     },
   },
 

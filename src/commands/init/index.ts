@@ -1,4 +1,3 @@
-import type { Args } from '../generate/args'
 import { defineCommand } from 'citty'
 import { getRepo } from '../generate/args'
 import { initRepo } from './init'
@@ -33,12 +32,26 @@ export const main = defineCommand({
       default: true,
       description: 'Create a non-private repository',
     },
+    keywords: {
+      type: 'string',
+      description: 'Keywords (comma separated)',
+    },
+    addRemoteTemplate: {
+      alias: 'add-remote-template',
+      type: 'boolean',
+      description: 'Add remote template repository',
+    },
+    fixReplacements: {
+      alias: 'fix-replacements',
+      type: 'boolean',
+      description: 'Fix replacements',
+    },
   },
 
   async run({ args }) {
     const template = workspaceTemplate
-    const repo = await getRepo(args as Args, template)
+    const repo = await getRepo(args, template)
 
-    await initRepo(template, repo)
+    await initRepo(args, template, repo)
   },
 })

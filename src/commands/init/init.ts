@@ -15,7 +15,7 @@ export async function initRepo(args: Args, template: Template, repo: Repo) {
     await addRemoteTemplate(template, repo)
   if (await getFixReplacements(args.fixReplacements))
     await fixReplacements(template.getReplacements(repo), repo)
-  pnpmExec(['install'], { cwd: repo.path })
+  pnpmExec(['install', '--fix-lockfile', '--force'], { cwd: repo.path })
   pnpmExec(['lint:fix'], { cwd: repo.path })
   await commitInitChanges(repo)
   await pushChanges(repo)

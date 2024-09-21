@@ -56,7 +56,7 @@
     "dev": "pnpm --filter @gabortorma/mwm-playground dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepack": "pnpm run build",
+    "prerelease": "pnpm build && pnpm lint && pnpm typecheck",
     "release": "dotenv release-it",
     "typecheck": "tsc --noEmit",
     "test": "pnpm lint && pnpm typecheck && vitest run",

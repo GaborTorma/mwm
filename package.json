@@ -79,7 +79,7 @@
     "workspace-tools": "^0.36.4"
   },
   "devDependencies": {
-    "@gabortorma/antfu-eslint-config": "^1.7.4",
+    "@gabortorma/antfu-eslint-config": "^2.0.1",
     "@octokit/types": "^13.5.0",
     "@types/node": "^22.5.5",
     "dotenv-cli": "^7.4.2",

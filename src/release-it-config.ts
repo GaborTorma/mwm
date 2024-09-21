@@ -97,8 +97,8 @@ export function defineReleaseItConfig(preset: Preset, name?: string, config?: Co
     : `Release: ${versionTemplate}`
 
   const tagName = name
-    ? `${name}-v-${versionTemplate}`
-    : `v-${versionTemplate}`
+    ? `${name}-v${versionTemplate}`
+    : `v${versionTemplate}`
 
   switch (preset) {
     case 'workspace':

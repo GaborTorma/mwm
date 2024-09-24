@@ -7,5 +7,9 @@
     "strict": true,
     "esModuleInterop": true
   },
-  "include": ["src", "mwm.config.ts", ".release-it.ts"]
+  "include": [
+    "src/**/*",
+    "mwm.config.ts",
+    ".release-it.ts"
+  ]
 }

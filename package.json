@@ -56,10 +56,9 @@
     "dev": "pnpm --filter @gabortorma/mwm-playground dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prerelease": "pnpm build && pnpm lint && pnpm typecheck",
+    "test:types": "tsc --noEmit",
+    "prerelease": "pnpm build && pnpm lint && pnpm test:types",
     "release": "dotenv release-it",
-    "typecheck": "tsc --noEmit",
-    "test": "pnpm lint && pnpm typecheck && vitest run",
     "cli": "jiti ./scripts/cli.js",
     "merge-template": "./scripts/merge-template.sh"
   },

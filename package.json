@@ -63,7 +63,7 @@
     "merge-template": "./scripts/merge-template.sh"
   },
   "dependencies": {
-    "@octokit/rest": "^21.0.2",
+    "@octokit/rest": "^20.1.1",
     "c12": "^1.11.2",
     "change-case": "^5.4.4",
     "citty": "^0.1.6",
@@ -86,5 +86,10 @@
     "typescript": "^5.6.2",
     "unbuild": "^2.0.0",
     "vitest": "^2.1.1"
+  },
+  "pnpm": {
+    "updateConfig": {
+      "ignoreDependencies": ["@octokit/rest"]
+    }
   }
 }

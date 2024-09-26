@@ -52,12 +52,12 @@
     "dist"
   ],
   "scripts": {
-    "build": "unbuild",
+    "prepack": "unbuild",
     "dev": "pnpm --filter @gabortorma/mwm-playground dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test:types": "tsc --noEmit",
-    "prerelease": "pnpm build && pnpm lint && pnpm test:types",
+    "prerelease": "pnpm lint && pnpm test:types",
     "release": "dotenv release-it",
     "cli": "jiti ./scripts/cli.js",
     "merge-template": "./scripts/merge-template.sh"

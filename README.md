@@ -19,6 +19,62 @@ npm install -g @gabortorma/mwm
 mwm --help
 ```
 
+### Init
+
+```bash
+mwm init --help
+```
+
+Init will initalize a new repo in a directory below the one you are positioned in.
+
+```bash
+mwm init -fix-replacements
+```
+
+```bash
+mwm init --fixReplacements
+```
+
+This will replace the information in the template repository with the information you supply, either by prompts or command line. If omitted you will be prompted.
+
+```bash
+mwm init -organization <name>
+```
+
+```bash
+mwm init --owner <name>
+```
+
+This will set the info of the "author"-field in the package.json to the user/organization <name>. Important: the <name> must exist in the .mwmrc or mwm.config file; see below, however, you will be asked to select a valid entry if you supply one that doesn't exist. If omitted you will be prompted.
+
+```bash
+mwm init --name <name>
+```
+
+This is the name the of the repo created in the Github of the "owner/author/organization". This will set the info of the"name"-field of the package.json to the <name>. If ommited you will be prompted.
+
+```bash
+mwm init -desc <desc>
+```
+
+```bash
+mwm init --description <desc>
+```
+
+This will set the info of the "description"-field of the package.json to <desc>. If ommited you will be prompted.
+
+```bash
+mwm init --no-private
+```
+
+By default the repo created will be set private, by providing this switch you will make it public. You will not be prompted for this option if omitted.
+
+```bash
+mwm init --keywords <keywords>
+```
+
+This will set the info of the"keywords"-field of the package.json to <keywords>. The string must be enclosed in " and use commas between the keywords: "one,two,three". You will not be prompted for this option if omitted.
+
 ### Release
 
 ```bash

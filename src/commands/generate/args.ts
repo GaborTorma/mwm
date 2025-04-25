@@ -3,7 +3,7 @@ import type { Args as InitArgs } from '../init/args'
 import type { main } from './index'
 import type { Template } from './templates'
 import path from 'node:path'
-import consola from 'consola'
+import { consola } from 'consola'
 import { loadConfig } from '../../config'
 import { checkCancel, getBoolArg, getStringArg } from '../../utils/args'
 

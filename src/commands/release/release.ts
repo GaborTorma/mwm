@@ -1,4 +1,4 @@
-import consola from 'consola'
+import { consola } from 'consola'
 import { checkCancel } from '../../utils/args'
 import { pnpmExec } from '../../utils/pnpm'
 import { fixDependencies, getDependencies, getDependentsWithoutWorkspaces } from './dependencies'

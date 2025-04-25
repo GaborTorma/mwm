@@ -1,5 +1,5 @@
 import process from 'node:process'
-import consola from 'consola'
+import { consola } from 'consola'
 
 export async function getStringArg(arg: string, prompt: string): Promise<string> {
   const result = arg

@@ -1,10 +1,12 @@
+import type { Repo } from '../generate/args'
+import type { Template } from '../generate/templates'
 import type { Args } from './args'
 import { pnpmExec } from '../../utils/pnpm'
 import { sleep } from '../../utils/sleep'
-import { getAddRemoteTemplate, getFixReplacements, type Repo } from '../generate/args'
+import { getAddRemoteTemplate, getFixReplacements } from '../generate/args'
 import { generateGitHubRepo } from '../generate/github'
 import { fixReplacements } from '../generate/replace'
-import { addRemoteTemplate, commitInitChanges, pushChanges, type Template } from '../generate/templates'
+import { addRemoteTemplate, commitInitChanges, pushChanges } from '../generate/templates'
 import { cloneRepo } from './git'
 
 export async function initRepo(args: Args, template: Template, repo: Repo) {

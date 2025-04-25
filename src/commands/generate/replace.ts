@@ -21,7 +21,7 @@ export async function fixReplacements(replacements: Replacements, repo: Repo) {
       if (!Array.isArray(files)) {
         files = [files]
       }
-      replacement.files = files.map((file => join('.', repo.path, file)))
+      replacement.files = files.map(file => join('.', repo.path, file))
       await replaceInFile(replacement)
     }
     else if (replacement.type === 'pkg') {

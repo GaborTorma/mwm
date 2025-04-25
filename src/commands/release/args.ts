@@ -1,5 +1,5 @@
 import type { main } from './index'
-import consola from 'consola'
+import { consola } from 'consola'
 import { getWorkspaces } from 'workspace-tools'
 import { checkCancel } from '../../utils/args'
 

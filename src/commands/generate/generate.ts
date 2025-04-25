@@ -1,11 +1,13 @@
+import type { Args, Repo } from './args'
+import type { Template } from './templates'
 import { pnpmExec } from '../../utils/pnpm'
 import { sleep } from '../../utils/sleep'
 import { cloneRepo } from '../init/git'
-import { type Args, getAddRemoteTemplate, getClone, getFixReplacements, type Repo } from './args'
+import { getAddRemoteTemplate, getClone, getFixReplacements } from './args'
 import { addSubmodule } from './git'
 import { generateGitHubRepo } from './github'
 import { fixReplacements } from './replace'
-import { addRemoteTemplate, commitInitChanges, pushChanges, type Template } from './templates'
+import { addRemoteTemplate, commitInitChanges, pushChanges } from './templates'
 
 export async function deployRepo(arg: boolean, repo: Repo) {
   return await getClone(arg) ? cloneRepo(repo) : addSubmodule(repo)

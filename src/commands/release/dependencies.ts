@@ -1,4 +1,4 @@
-import consola from 'consola'
+import { consola } from 'consola'
 import { createDependencyMap, getPackageInfos } from 'workspace-tools'
 import { pnpmExec } from '../../utils/pnpm'
 import { commitChanges } from './git'

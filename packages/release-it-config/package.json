@@ -1,0 +1,39 @@
+{
+  "name": "mwm-release-it-config",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Release-it config for MWM",
+  "author": "gabortorma",
+  "license": "MIT",
+  "keywords": [
+    "mwm",
+    "release-it",
+    "config"
+  ],
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test:types": "tsc --noEmit",
+    "prerelease": "nr lint",
+    "release": "dotenv release-it"
+  },
+  "dependencies": {
+    "defu": "catalog:",
+    "release-it": "catalog:",
+    "release-it-pnpm": "catalog:"
+  },
+  "devDependencies": {
+    "@antfu/ni": "catalog:",
+    "@antfu/utils": "catalog:",
+    "@gabortorma/antfu-eslint-config": "catalog:",
+    "@types/node": "catalog:",
+    "dotenv-cli": "catalog:",
+    "pnpm": "catalog:",
+    "typescript": "catalog:",
+    "unbuild": "catalog:"
+  }
+}

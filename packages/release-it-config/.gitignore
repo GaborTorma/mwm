@@ -1,0 +1,9 @@
+node_modules
+coverage
+dist
+types
+.DS_Store
+.eslintcache
+*.log*
+*.env*
+.mwmrc

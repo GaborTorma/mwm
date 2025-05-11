@@ -135,6 +135,9 @@ importers:
       jiti:
         specifier: 'catalog:'
         version: 2.4.2
+      mwm-release-it-config:
+        specifier: 'workspace:'
+        version: link:packages/release-it-config
       typescript:
         specifier: 'catalog:'
         version: 5.8.3

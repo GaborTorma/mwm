@@ -84,6 +84,7 @@
     "@types/node": "catalog:",
     "dotenv-cli": "catalog:",
     "jiti": "catalog:",
+    "mwm-release-it-config": "workspace:",
     "typescript": "catalog:",
     "unbuild": "catalog:",
     "vitest": "catalog:"
